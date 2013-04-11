@@ -101,15 +101,8 @@ limit = function(num, range) {
 
 getCSSColor = function(color, alpha) {
 	color = color||"#000000";
-	if (alpha == null || alpha == 1) {
-		return "\""+color+"\"";
-	} else {
-		var val = parseInt(color.substr(1),16);
-		var r = val >> 16 & 0xFF;
-		var g = val >> 8 & 0xFF;
-		var b = val & 0xFF;
-		return "\"rgba("+r+","+g+","+b+","+fix(alpha,3)+")\"";
-	}
+	if (alpha == null || alpha == 1) return "0xFF" + color.substr(1);
+	else return "0x" + (alpha*255|0).toString(16) + color.substr(1);
 }
 
 extendRect = function(x,y,width,height,rect) {

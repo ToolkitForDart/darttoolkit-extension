@@ -26,15 +26,15 @@ class _ShapeFactory {
     graphics = shape.graphics;
   }
   
-  _ShapeFactory beginLinearGradientFill(List<String> colors, List<num> stops, num x0, num y0, num x1, num y1) {
+  _ShapeFactory beginLinearGradientFill(List<int> colors, List<num> stops, num x0, num y0, num x1, num y1) {
     return lf(colors, stops, x0, y0, x1, y1);
   }
   
-  _ShapeFactory beginRadialGradientFill(List<String> colors, List<num> stops, num x0, num y0, num r0, num x1, num y1, num r1) {
+  _ShapeFactory beginRadialGradientFill(List<int> colors, List<num> stops, num x0, num y0, num r0, num x1, num y1, num r1) {
     return rf(colors, stops, x0, y0, r0, x1, y1, r1);
   }
   
-  _ShapeFactory beginFill(String color) {
+  _ShapeFactory beginFill(int color) {
     return f(color);
   }
   
@@ -64,12 +64,12 @@ class _ShapeFactory {
   }
   
   // beginLinearFill
-  _ShapeFactory lf(List<String> colors, List<num> stops, num x0, num y0, num x1, num y1) {
+  _ShapeFactory lf(List<int> colors, List<num> stops, num x0, num y0, num x1, num y1) {
     if (endFill != null) endFill();
     var gradient = new GraphicsGradient.linear(x0, y0, x1, y1);
     int n = colors.length;
     for(int i = 0; i<n; i++) {
-      gradient.addColorStop(stops[i], parseColor(colors[i]));
+      gradient.addColorStop(stops[i], colors[i]);
     }
     endFill = () {
       graphics.fillGradient(gradient);
@@ -78,12 +78,12 @@ class _ShapeFactory {
     return this;
   }
   // beginRadialFill
-  _ShapeFactory rf(List<String> colors, List<num> stops, num x0, num y0, num r0, num x1, num y1, num r1) {
+  _ShapeFactory rf(List<int> colors, List<num> stops, num x0, num y0, num r0, num x1, num y1, num r1) {
     if (endFill != null) endFill();
     var gradient = new GraphicsGradient.radial(x0, y0, r0, x1, y1, r1);
     int n = colors.length;
     for(int i = 0; i<n; i++) {
-      gradient.addColorStop(stops[i], parseColor(colors[i]));
+      gradient.addColorStop(stops[i], colors[i]);
     }
     endFill = () {
       graphics.fillGradient(gradient);
@@ -92,11 +92,10 @@ class _ShapeFactory {
     return this;
   }
   // beginFill
-  _ShapeFactory f(String color) {
+  _ShapeFactory f(int color) {
     if (endFill != null) endFill();
-    int col = parseColor(color);
     endFill = () {
-      graphics.fillColor(col);
+      graphics.fillColor(color);
       return this;
     };
     return this;
@@ -132,29 +131,5 @@ class _ShapeFactory {
   _ShapeFactory p(String str) {
     graphics.decode(str);
     return this;
-  }
-  
-  // decode html-encoded colors (TEMPORARY: toolkit output should generate int)
-  int parseColor(String color) {
-    if (color == null || color == "") return 0;
-    if (color[0] == "#") {
-      if (color.length < 8) return int.parse("0xff${color.substring(1)}");
-      else return int.parse("0x${color.substring(1)}");
-    }
-    if (color.startsWith("rgba(")) {
-      var parts = color.substring(5, color.length-1).split(",");
-      return ((double.parse(parts[3])*256).toInt() << 24) 
-          | (int.parse(parts[0]) << 16) 
-          | (int.parse(parts[1]) << 8) 
-          | int.parse(parts[2]); 
-    }
-    if (color.startsWith("rgb(")) {
-      var parts = color.substring(4, color.length-1).split(",");
-      return 0xff000000 
-          | (int.parse(parts[0]) << 16) 
-          | (int.parse(parts[1]) << 8) 
-          | int.parse(parts[2]); 
-    }
-    return 0;
   }
 }

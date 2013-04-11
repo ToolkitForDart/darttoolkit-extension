@@ -81,7 +81,7 @@ p.toString = function(t,scope) {
 		str += "\n"+t+"new ButtonHelper("+name+", 0, 1, "+(this.symbol.duration > 2 ? "2" : "1");
 		if (this.symbol.duration >= 4) {
 			// has a hit frame.
-			str += ", new "+this.symbol.name+"(), 3";
+			str += ", new "+this.symbol.name+"(\"synched\", 3)";
 		}
 		str += ");";
 	}
