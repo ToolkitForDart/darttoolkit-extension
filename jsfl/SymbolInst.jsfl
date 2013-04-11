@@ -77,13 +77,17 @@ p.toString = function(t,scope) {
 	str += ';';
 
 	if (e.@symbolType == "button") {
-		Exporter.instance.enableMouseOver = true;
-		str += "\n"+t+"new ButtonHelper("+name+", 0, 1, "+(this.symbol.duration > 2 ? "2" : "1");
-		if (this.symbol.duration >= 4) {
-			// has a hit frame.
-			str += ", new "+this.symbol.name+"(\"synched\", 3)";
+		if (this.symbol.duration < 2) {
+			str += "\n"+t+name+".useHandCursor = true;"
 		}
-		str += ");";
+		else {
+			str += "\n"+t+"new ButtonHelper("+name+", 0, 1, "+(this.symbol.duration > 2 ? "2" : "1");
+			if (this.symbol.duration >= 4) {
+				// has a hit frame.
+				str += ", new "+this.symbol.name+"(\"synched\", 3)";
+			}
+			str += ");";
+		}
 	}
 
 	return str;
