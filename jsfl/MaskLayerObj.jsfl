@@ -45,8 +45,8 @@ p.graphicEntries;
 p.toString = function(t, mc) {
 	var str = t+"// "+this.name+" (mask)";
 
-	str += "\n"+t+"// WARNING: masks are not supported by the toolkit yet.\n\n";
-	return str;
+	//str += "\n"+t+"// WARNING: masks are not supported by the toolkit yet.\n\n";
+	//return str;
 
 	// TODO generate StageXL-compatible mask objects
 
@@ -55,20 +55,22 @@ p.toString = function(t, mc) {
 	
 	// define the shape:
 	var e0 = this.xml.DOMFrame.elements.DOMShape[0];
+	var shapeName = this.maskName+"_shape";
+	var defMask = "\n"+t+"var "+this.maskName+" = new Mask.shape("+shapeName+")..targetSpace = this;";
 	//var o = getElementTransform(e0);
-	str += "\n"+t+"var "+this.maskName+" = new Mask.custom();";
-
 	// graphics:
 	var gs = this.graphicEntries;
 	if (gs.length == 1) {
 		// single frame.
 		var o = gs[0];
-		str += "\n"+t+this.maskName+exportTransform(e0, this.maskName, "\n"+t);
-		str += "\n"+t+".graphics = _shape(0,0)"+o.data+".graphics;";
-		//if (o.x || o.y) { str += "\n"+t+this.maskName+".setTransform("+o.x+","+o.y+");"; }
+		str += "\n"+t+"var "+shapeName+" = _shape("+o.x+","+o.y+")"+o.data+".shape;";
+		/*if (o.scaleX != 1 || o.scaleY != 1 || o.rotation || o.skewX || o.skewY || o.regX || o.regY)
+			str += exportTransform(e0, name, '\n'+t);*/
+		str += defMask;
 	} else {
 		// multi-frame.
-		var tween = "\n"+t+"timeline.addTween(_tween("+this.maskName+")";
+		str += "\n"+t+"var "+shapeName+" = new Shape();";
+		var tween = "\n"+t+"timeline.addTween(_tween("+shapeName+")";
 		var defs = [];
 		var graphicObjs = {};
 		var prev = 0;
@@ -97,7 +99,7 @@ p.toString = function(t, mc) {
 			prevO = o;
 		}
 		if (prev < this.duration) { tween += ".wait("+(this.duration-prev)+")"; }
-		str += "\n"+defs.join("\n")+"\n"+tween+");";
+		str += "\n"+defs.join("\n")+defMask+"\n"+tween+");";
 	}
 	return str+"\n\n";
 }
