@@ -31,9 +31,25 @@ p.toString = function(t) {
 }
 
 p.exportFile = function(sourcePath, destPath, exportPath) {
-	var suffix = ".mp3";
-	var transcoded = this.xml.*[0];
-	var source = transcoded ? transcoded.@href : this.xml.@href;
+
+	// TODO do we support loops? would require to link the sound to the MC to be able to stop it eventually.
+	// TODO support basic sound envelope for volume
+	/*
+	<DOMFrame index="73" duration="16" soundEffect="custom" soundName="_SOUND/misc003.wav" soundLoopMode="loop" soundLoop="32767" outPoint44="11520" soundZoomLevel="2">
+      <SoundEnvelope>
+        <SoundEnvelopePoint level0="8004" level1="7754"/>
+      </SoundEnvelope>
+      <elements/>
+    </DOMFrame>
+    */
+
+	// TODO do we support transcoded MP3s in Dart?
+	/*var suffix = ".mp3"; 
+	var transcoded = this.xml.*[0]; // don't get transcoded .mp3
+	var source = transcoded ? transcoded.@href : this.xml.@href;*/
+
+	var source = ""+this.xml.@href;
+	var suffix = "."+source.split('.').pop();
 
 	// NOTE: fixAssetName should be removed in future versions:
 	this.src = destPath+  fixAssetName(this.name)  +suffix;

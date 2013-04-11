@@ -199,7 +199,6 @@ getColor = function(s) {
 	var hex = ""+s;
 	if (hex.length == 0) return "0";
 	if (hex.length > 0 && hex.charAt(0) == "#") return "0x" + hex.substr(1);
-	Log.warning("======= CONVERT COLOR " + s);
 	return "0";
 }
 

@@ -58,7 +58,7 @@ LayerObj.readCodeAndLabels = function(xml, code, labels) {
 			if (frame.SoundEnvelope[0]) { Log.warning("EJS_W_F_SOUNDFX"); }
 			var repeatCount = Math.max(0, frame.@soundLoop*1-1);
 			if (repeatCount == 32767-1) { repeatCount = -1; } // loop
-			code[index].push('playSound("'+Exporter.instance.getSymbol(frame.@soundName).name+(repeatCount?'",'+repeatCount:'"')+');');
+			code[index].push('_playSound("'+Exporter.instance.getSymbol(frame.@soundName).name+(repeatCount?'",'+repeatCount:'"')+');');
 		}
 	}
 }

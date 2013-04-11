@@ -9,6 +9,11 @@ const _shape = _ShapeFactory.create;
 const num _rad2deg = 180/PI;
 const num _deg2rad = PI/180;
 
+// TODO honor 'repeat' and add 'volume/pan' support
+Sound _playSound(String sndId, [int repeat]) {
+  resources.getSound(sndId).play();
+}
+
 class _ShapeFactory {
   Shape shape;
   Graphics graphics;
