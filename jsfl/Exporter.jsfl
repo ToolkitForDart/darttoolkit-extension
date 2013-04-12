@@ -115,7 +115,7 @@ Exporter = function(doc, props) {
 	this.libNS = props.libNS;
 	this.imagesNS = props.imagesNS;
 	//this.createjsNS = props.createjsNS;
-	this.loopTimeline = props.loopTimeline;
+	this.loopTimeline = props.loop;
 
 	/*for(var p in props)
 		fl.trace(p +"=" + props[p]);
@@ -613,7 +613,8 @@ p.writeDartIndex = function() {
 		+'  \n';
 
 	if (this.bitmaps.length || this.sounds.length) 
-		str += '  $LIB.loadResources("$LIB/").then(start);\n'
+		str += '  $LIB.loadResources("$LIB/").then(start)\n'
+			+'    .catchError((e) => print(e));\n'
 			+'}\n'
 			+'\n'
 			+'void start(result) {\n';

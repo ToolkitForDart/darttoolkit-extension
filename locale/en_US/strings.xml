@@ -40,6 +40,7 @@
 	<s key="EJS_UI_HTMLMOD">The HTML file has been modified since the last publish. Overwrite?</s>
 	<s key="EJS_UI_INDEXMOD">The Dart index file has been modified since the last publish. Overwrite?</s>
 	<s key="EJS_UI_LIBMOD">The Dart library file has been modified since the last publish. Overwrite?</s>
+	<s key="EJS_UI_INDEXLIBMOD">The Dart index and Dart library files have been modified since the last publish. Overwrite?</s>
 	<s key="EJS_UI_HTMLINDEXMOD">The HTML and Dart index files have been modified since the last publish. Overwrite?</s>
 	<s key="EJS_UI_HTMLINDEXLIBMOD">The HTML, Dart index, and Dart library files have been modified since the last publish. Overwrite?</s>
 	<s key="EJS_UI_HTMLMISSING">The HTML file could not be found for preview. Enable "Publish HTML", or disable "Preview". [%DETAILS%]</s>

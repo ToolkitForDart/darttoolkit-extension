@@ -196,12 +196,19 @@ function runExport() {
 		return false;
 	}
 	
+	// doc options
 	var props = cleanupProps(deserialize(loadData())); // outputPath, imagePath, soundsPath, libraryPath, exportImages, exportSounds, exportTweens, exportHTML, useTime, preview
 	fl.logPIPEvent(PIP_NAME, "Publish"+(props.preview?" and Preview":""));
 
 	if (!FLfile.exists(props.outputPath)) {
 		alert(Locale.get("EJS_UI_OUTPUTPATH", getDisplayPath(props.outputPath)));
 		return false;
+	}
+	// timeline options
+	var timelineProps = deserialize(loadTimelineData());
+	if (timelineProps) {
+		props.version = parseFloat(timelineProps.version);
+		props.loop = timelineProps.loop == "true";
 	}
 	
 	include("Log");

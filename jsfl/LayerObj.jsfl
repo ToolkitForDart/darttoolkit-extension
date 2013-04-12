@@ -304,7 +304,7 @@ p.extractTimeline = function(frames, itemName, scope, code, labels, names) {
 				extract.appendChild(<DOMFrame index={lastIndex} duration={newIndex-lastIndex}><elements/></DOMFrame>);
 			// clone
 			var duration = frame.@duration*1||1;
-			lastIndex = newIndex + frame.@duration*1||1;
+			lastIndex = newIndex + duration;
 			extract.appendChild( XML(frame.toXMLString()) );
 			// cleanup
 			delete frame.@tweenType;

@@ -43,13 +43,9 @@ p.exportFile = function(sourcePath, destPath, exportPath) {
     </DOMFrame>
     */
 
-	// TODO do we support transcoded MP3s in Dart?
-	/*var suffix = ".mp3"; 
+	var suffix = ".mp3"; 
 	var transcoded = this.xml.*[0]; // don't get transcoded .mp3
-	var source = transcoded ? transcoded.@href : this.xml.@href;*/
-
-	var source = ""+this.xml.@href;
-	var suffix = "."+source.split('.').pop();
+	var source = transcoded ? transcoded.@href : this.xml.@href;
 
 	// NOTE: fixAssetName should be removed in future versions:
 	this.src = destPath+  fixAssetName(this.name)  +suffix;
