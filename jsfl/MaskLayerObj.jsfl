@@ -45,11 +45,6 @@ p.graphicEntries;
 p.toString = function(t, mc) {
 	var str = t+"// "+this.name+" (mask)";
 
-	//str += "\n"+t+"// WARNING: masks are not supported by the toolkit yet.\n\n";
-	//return str;
-
-	// TODO generate StageXL-compatible mask objects
-
 	if (this.error) { return str+"\n"+t+"/* "+Locale.get(this.error)+" */\n\n"; }
 	if (this.empty) { return ""; }
 	

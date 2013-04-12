@@ -92,8 +92,7 @@ p.toString = function(t, mc) {
 			str += this.definitionsToString(this.extractedTimelines[i].definitions, t);
 	}
 
-	Log.warning("WARNING: masks are not supported by the toolkit yet."); // TODO
-	if (/*false &&*/ this.mask) {
+	if (this.mask) {
 		var names = [];
 		this.getDefinitionsNames(this.definitions, names);
 		if (this.extractedTimelines) {

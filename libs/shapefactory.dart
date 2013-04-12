@@ -56,6 +56,9 @@ class _ShapeFactory {
   _ShapeFactory beginLinearGradientStroke(List<int> colors, List<num> stops, num x0, num y0, num x1, num y1) {
     return ls(colors, stops, x0, y0, x1, y1);
   }
+  _ShapeFactory beginRadialGradientStroke(List<int> colors, List<num> stops, num x0, num y0, num r0, num x1, num y1, num r1) {
+    return rs(colors, stops, x0, y0, r0, x1, y1, r1);
+  }
   _ShapeFactory setStrokeStyle(num thickness, [caps, joints, num miterLimit=10, bool ignoreScale=false]) {
     return ss(thickness, caps, joints, miterLimit, ignoreScale);
   }
@@ -145,6 +148,18 @@ class _ShapeFactory {
   _ShapeFactory ls(List<int> colors, List<num> stops, num x0, num y0, num x1, num y1) {
     es();
     var gradient = new GraphicsGradient.linear(x0, y0, x1, y1);
+    int n = colors.length;
+    for(int i = 0; i<n; i++) {
+      gradient.addColorStop(stops[i], colors[i]);
+    }
+    _endStroke = () {
+      _graphics.strokeGradient(gradient, _strokeWidth, _strokeJoints, _strokeCaps);
+    };
+    return this;
+  }
+  _ShapeFactory rs(List<int> colors, List<num> stops, num x0, num y0, num r0, num x1, num y1, num r1) {
+    es();
+    var gradient = new GraphicsGradient.radial(x0, y0, r0, x1, y1, r1);
     int n = colors.length;
     for(int i = 0; i<n; i++) {
       gradient.addColorStop(stops[i], colors[i]);
