@@ -9,132 +9,221 @@ const _shape = _ShapeFactory.create;
 const num _rad2deg = 180/PI;
 const num _deg2rad = PI/180;
 
-// TODO honor 'repeat' and add 'volume/pan' support
-Sound _playSound(String sndId, [int repeat]) {
-  resources.getSound(sndId).play();
-}
-
 class _ShapeFactory {
-  Shape shape;
-  Graphics graphics;
-  Function endFill; 
+  Shape _shape;
+  Graphics _graphics;
+  Function _endFill;
+  Function _endStroke;
+  num _strokeWidth = 1;
+  String _strokeJoints = "miter";
+  String _strokeCaps = "butt";
   
   static _ShapeFactory create(num x, num y) {
-    var s = new _ShapeFactory();
-    s.shape.x = x.toDouble();
-    s.shape.y = y.toDouble();
-    return s;
+    return new _ShapeFactory(x, y);
   }
   
-  _ShapeFactory() {
-    shape = new Shape();
-    graphics = shape.graphics;
+  Shape get shape {
+    ef(); es();
+    return _shape;
+  }
+  Graphics get graphics {
+    ef(); es();
+    return _graphics;
+  }
+  
+  _ShapeFactory(num x, num y) {
+    _shape = new Shape();
+    _graphics = _shape.graphics;
+    _shape.x = x.toDouble();
+    _shape.y = y.toDouble();
   }
   
   _ShapeFactory beginLinearGradientFill(List<int> colors, List<num> stops, num x0, num y0, num x1, num y1) {
     return lf(colors, stops, x0, y0, x1, y1);
   }
-  
   _ShapeFactory beginRadialGradientFill(List<int> colors, List<num> stops, num x0, num y0, num r0, num x1, num y1, num r1) {
     return rf(colors, stops, x0, y0, r0, x1, y1, r1);
   }
-  
-  _ShapeFactory beginFill(int color) {
+  _ShapeFactory beginFill([int color]) {
     return f(color);
   }
-  
-  _ShapeFactory beginStroke() {
-    graphics.beginPath();
-    return this;
+  _ShapeFactory endFill() {
+    return ef();
   }
-  
+  _ShapeFactory beginStroke([int color]) {
+    return s(color);
+  }
+  _ShapeFactory beginLinearGradientStroke(List<int> colors, List<num> stops, num x0, num y0, num x1, num y1) {
+    return ls(colors, stops, x0, y0, x1, y1);
+  }
+  _ShapeFactory setStrokeStyle(num thickness, [caps, joints, num miterLimit=10, bool ignoreScale=false]) {
+    return ss(thickness, caps, joints, miterLimit, ignoreScale);
+  }
   _ShapeFactory closePath() {
-    graphics.closePath();
-    return this;
+    return cp();
   }
   
   _ShapeFactory moveTo(num x, num y) {
-    graphics.moveTo(x, y);
+    _graphics.moveTo(x, y);
     return this;
   }
-  
   _ShapeFactory lineTo(num x, num y) {
-    graphics.lineTo(x, y);
+    _graphics.lineTo(x, y);
     return this;
   }
-  
   _ShapeFactory curveTo(num cx, num cy, num x, num y) {
-    graphics.quadraticCurveTo(cx, cy, x, y);
+    _graphics.quadraticCurveTo(cx, cy, x, y);
     return this;
   }
+  _ShapeFactory drawCircle(num x, num y, num radius) {
+    return dc(x, y, radius);
+  }
+  _ShapeFactory drawEllipse(num x, num y, num width, num height) {
+    return de(x, y, width, height);
+  }
+  _ShapeFactory drawRect(num x, num y, num width, num height) {
+    return dr(x, y, width, height);
+  }
+  _ShapeFactory drawRectRounded(num x, num y, num width, num height, num radius) {
+    return rr(x, y, width, height, radius);
+  }
+  _ShapeFactory drawPolyStar (num x, num y, num radius, num sides, num pointSize, num angle) {
+    return dp(x, y, radius, sides, pointSize, angle);
+  }
   
-  // beginLinearFill
+  // fills
   _ShapeFactory lf(List<int> colors, List<num> stops, num x0, num y0, num x1, num y1) {
-    if (endFill != null) endFill();
+    ef();
     var gradient = new GraphicsGradient.linear(x0, y0, x1, y1);
     int n = colors.length;
     for(int i = 0; i<n; i++) {
       gradient.addColorStop(stops[i], colors[i]);
     }
-    endFill = () {
-      graphics.fillGradient(gradient);
-      return this;
+    _endFill = () {
+      _graphics.fillGradient(gradient);
     };
     return this;
   }
-  // beginRadialFill
   _ShapeFactory rf(List<int> colors, List<num> stops, num x0, num y0, num r0, num x1, num y1, num r1) {
-    if (endFill != null) endFill();
+    ef();
     var gradient = new GraphicsGradient.radial(x0, y0, r0, x1, y1, r1);
     int n = colors.length;
     for(int i = 0; i<n; i++) {
       gradient.addColorStop(stops[i], colors[i]);
     }
-    endFill = () {
-      graphics.fillGradient(gradient);
-      return this;
+    _endFill = () {
+      _graphics.fillGradient(gradient);
     };
     return this;
   }
-  // beginFill
-  _ShapeFactory f(int color) {
-    if (endFill != null) endFill();
-    endFill = () {
-      graphics.fillColor(color);
-      return this;
+  _ShapeFactory f([int color]) {
+    if (color == null) color = 0;
+    ef();
+    _endFill = () {
+      _graphics.fillColor(color);
     };
     return this;
   }
-  // endFill
   _ShapeFactory ef() {
-    if (endFill != null) endFill();
+    if (_endFill != null) {
+      _endFill();
+      _endFill = null;
+    }
     return this;
   }
   
-  _ShapeFactory s() {
-    graphics.beginPath();
+  // stroke
+  _ShapeFactory s([int color]) {
+    es();
+    if (color == null) color = 0;
+    _endStroke = () {
+      _graphics.strokeColor(color, _strokeWidth, _strokeJoints, _strokeCaps);
+    };
+    _graphics.beginPath();
     return this;
   }
+  _ShapeFactory ls(List<int> colors, List<num> stops, num x0, num y0, num x1, num y1) {
+    es();
+    var gradient = new GraphicsGradient.linear(x0, y0, x1, y1);
+    int n = colors.length;
+    for(int i = 0; i<n; i++) {
+      gradient.addColorStop(stops[i], colors[i]);
+    }
+    _endStroke = () {
+      _graphics.strokeGradient(gradient, _strokeWidth, _strokeJoints, _strokeCaps);
+    };
+    return this;
+  }
+  _ShapeFactory es() {
+    if (_endStroke != null) {
+      _endStroke();
+      _endStroke = null;
+    }
+    return this;
+  }
+  _ShapeFactory ss(num thickness, [caps, joints, num miterLimit=10, bool ignoreScale=false]) {
+    _strokeWidth = thickness;
+    if (caps != null) {
+      switch(caps) {
+        case 0: _strokeCaps = "butt"; break;
+        case 1: _strokeCaps = "round"; break;
+        case 2: _strokeCaps = "square"; break;
+        default: _strokeCaps = caps.toString(); break;
+      }
+    }
+    else _strokeCaps = "butt";
+    if (joints != null) {
+      switch(joints) {
+        case 0: _strokeJoints = "miter"; break;
+        case 1: _strokeJoints = "round"; break;
+        case 2: _strokeJoints = "bevel"; break;
+        default: _strokeJoints = joints.toString(); break;
+      }
+    }
+    else _strokeJoints = "miter";
+    return this;
+  }
+  
   _ShapeFactory cp() {
-    graphics.closePath();
+    _graphics.closePath();
     return this;
   }
   _ShapeFactory mt(num x, num y) {
-    graphics.moveTo(x, y);
+    _graphics.moveTo(x, y);
     return this;
   }
   _ShapeFactory lt(num x, num y) {
-    graphics.lineTo(x, y);
+    _graphics.lineTo(x, y);
     return this;
   }
   _ShapeFactory c(num cx, num cy, num x, num y) {
-    graphics.quadraticCurveTo(cx, cy, x, y);
+    _graphics.quadraticCurveTo(cx, cy, x, y);
+    return this;
+  }
+  _ShapeFactory dc(num x, num y, num radius) {
+    _graphics.circle(x, y, radius);
+    return this;
+  }
+  _ShapeFactory de(num x, num y, num width, num height) {
+    _graphics.ellipse(x, y, width, height);
+    return this;
+  }
+  _ShapeFactory dr(num x, num y, num width, num height) {
+    _graphics.rect(x, y, width, height);
+    return this;
+  }
+  _ShapeFactory rr(num x, num y, num width, num height, num radius) {
+    _graphics.rectRound(x, y, width, height, radius, radius);
+    return this;
+  }
+  _ShapeFactory dp(num x, num y, num radius, num sides, num pointSize, num angle) {
+    // TODO PolyStar
     return this;
   }
   
   // decodePath
   _ShapeFactory p(String str) {
-    graphics.decode(str);
+    _graphics.decode(str);
     return this;
   }
 }

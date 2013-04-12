@@ -538,8 +538,10 @@ p.writeDartLib = function() {
 		+'import \'package:stagexl/stagexl.dart\';\n\n';
 
 	// set up the manifest for sounds and images:
+	var hasResources = false;
 	if (this.bitmaps.length || this.sounds.length)
 	{
+		hasResources = true;
 		//var defIDs = '';
 		var resList = '';
 		for (i=0; i<this.bitmaps.length; i++) {
@@ -583,6 +585,8 @@ p.writeDartLib = function() {
 
 	// include API filler
 	str += '\n\n' + FLfile.read(BASE_PATH+"libs/shapefactory.dart");
+	if (hasResources)
+		str += '\n\n' + FLfile.read(BASE_PATH+"libs/soundfactory.dart");
 		
 	FLfile.write(this.dartLibFilePath, str);
 	this.fileChangeManager.updateFile(this.dartLibFilePath);
@@ -617,7 +621,9 @@ p.writeDartIndex = function() {
 			+'void start(result) {\n';
 
 	str += '  exportRoot = new $LIB.$DOCSYMBOL();\n';
-	if (!this.loopTimeline) str += '  exportRoot.loop = false;\n';
+
+	if (!this.loopTimeline && this.symbols[0].movieclip) 
+		str += '  exportRoot.loop = false;\n';
 
 	str +=
 		 '\n'

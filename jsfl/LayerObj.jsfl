@@ -591,6 +591,7 @@ p.getStateObj = function(e, frame, names, definitions) {
 	// new inst, create stateObj:
 	if (!inst || inst.isEmpty()) { return null; }
 	inst.name = getVarName(e.@name, this.nameSpace, type);
+	if (symbol && inst.name == symbol.name) inst.name += "$";
 	
 	stateObj = new StateObj(inst, frame, type)
 	arr.push(stateObj);
