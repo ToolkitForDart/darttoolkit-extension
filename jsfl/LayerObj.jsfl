@@ -52,7 +52,7 @@ LayerObj.readCodeAndLabels = function(xml, code, labels) {
 		}
 		
 	// handle sounds:
-		if (frame.@soundName[0]) {
+		if (frame.@soundName[0] && Exporter.instance.exportSounds) {
 			if (code[index] == null) { code[index] = []; }
 			if (frame.@soundSync[0]) { Log.warning("EJS_W_F_SOUNDSTOP"); }
 			if (frame.SoundEnvelope[0]) { Log.warning("EJS_W_F_SOUNDFX"); }
@@ -312,25 +312,24 @@ p.extractTimeline = function(frames, itemName, scope, code, labels, names) {
 			continue;
 		}
 
-		var match = es.(@libraryItemName == itemName);
-		if (match.length() > 1) {
-			Log.error("ERROR: layer '" + this.name + "' contains an unsupported combination of '" 
-				+ itemName + "' instances and motions changes.");
-		}
-		else if (match.length() == 1) {
-			// same instance?
-			var name = "" + e0.@name;
-			if (instName == null) instName = name;
-			else if (name != "" && instName != name) break;
-			// pad
-			if (lastIndex != newIndex)
-				extract.appendChild(<DOMFrame index={lastIndex} duration={newIndex-lastIndex}><elements/></DOMFrame>);
-			// clone
-			var duration = frame.@duration*1||1;
-			lastIndex = newIndex + duration;
-			extract.appendChild(<DOMFrame index={frame.@index} duration={duration}><elements>{match}</elements></DOMFrame>);
-			// cleanup
-			frame.elements = <elements>{frame.elements.DOMSymbolInstance.(@libraryItemName != itemName)}</elements>;
+		for (var j=0,m=es.length(); j<m; j++) {
+			var match = es[j];
+			if (match.@libraryItemName == itemName) {
+				// same instance?
+				var name = "" + e0.@name;
+				if (instName == null) instName = name;
+				else if (name != "" && instName != name) break;
+				// pad
+				if (lastIndex != newIndex)
+					extract.appendChild(<DOMFrame index={lastIndex} duration={newIndex-lastIndex}><elements/></DOMFrame>);
+				// clone
+				var duration = frame.@duration*1||1;
+				lastIndex = newIndex + duration;
+				extract.appendChild(<DOMFrame index={frame.@index} duration={duration}><elements>{match}</elements></DOMFrame>);
+				// cleanup
+				frame.elements = <elements>{frame.elements.DOMSymbolInstance.(@libraryItemName != itemName)}</elements>;
+				break;
+			}
 		}
 	}
 

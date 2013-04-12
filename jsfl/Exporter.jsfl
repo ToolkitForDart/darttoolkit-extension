@@ -614,7 +614,7 @@ p.writeDartIndex = function() {
 
 	if (this.bitmaps.length || this.sounds.length) 
 		str += '  $LIB.loadResources("$LIB/").then(start)\n'
-			+'    .catchError((e) => print(e));\n'
+			+'    .catchError((e) => print(e.error));\n'
 			+'}\n'
 			+'\n'
 			+'void start(result) {\n';

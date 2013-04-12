@@ -82,7 +82,7 @@ exportFilters = function(filters, name, t) {
 			Log.warning("EJS_W_F_FILTERS");
 		}
 	}*/
-	Log.warning("WARNING: Filters for Dart not implemented"); // TODO
+	Log.warning("WARNING: Filters in Dart StageXL are not implemented"); // TODO
 	return "";
 }
 

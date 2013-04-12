@@ -206,10 +206,8 @@ function runExport() {
 	}
 	// timeline options
 	var timelineProps = deserialize(loadTimelineData());
-	if (timelineProps) {
-		props.version = parseFloat(timelineProps.version);
-		props.loop = timelineProps.loop == "true";
-	}
+	if (!timelineProps) props.loop = true;
+	else props.loop = timelineProps.loop == "true";
 	
 	include("Log");
 	include("Exporter");
@@ -242,6 +240,7 @@ function cleanupProps(props) {
 
 function saveData(data) {
 	getDocument();
+	fl.trace("save " + data);
 	if (data == doc.getDataFromDocument(DOC_DATA_NAME)) { return; }
 	doc.addDataToDocument(DOC_DATA_NAME, "string", data)
 	return "";
