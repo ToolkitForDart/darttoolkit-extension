@@ -68,7 +68,7 @@ fixAssetName = function(name) {
 
 // USED FOR SYMBOL AND TEXT INSTANCES
 exportFilters = function(filters, name, t) {
-	/*var l = filters.length();
+	var l = filters.length();
 	for (var i=0; i<l; i++) {
 		var f = filters[i];
 		if (f.@isEnabled == "false") { continue; }
@@ -77,11 +77,11 @@ exportFilters = function(filters, name, t) {
 			Log.warning("EJS_W_SHADOW");
 			var offX = (fname == "GlowFilter") ? 0 : Math.cos(f.@angle*1/180*Math.PI)*f.@distance*1;
 			var offY = (fname == "GlowFilter") ? 0 : Math.sin(f.@angle*1/180*Math.PI)*f.@distance*1;
-			return t+name+".shadow = new "+CREATEJS_VAR_+"Shadow("+getCSSColor(f.@color[0], f.@alpha[0])+","+fix(offX,0)+","+fix(offY,0)+","+fix((f.@blurX*1+f.@blurY*1)/2,0)+");";
+			return t+"..shadow = new Shadow("+getCSSColor(f.@color[0], f.@alpha[0])+","+fix(offX,0)+","+fix(offY,0)+","+fix((f.@blurX*1+f.@blurY*1)/2,0)+")";
 		} else {
 			Log.warning("EJS_W_F_FILTERS");
 		}
-	}*/
+	}
 	Log.warning("WARNING: Filters in Dart StageXL are not implemented"); // TODO
 	return "";
 }
