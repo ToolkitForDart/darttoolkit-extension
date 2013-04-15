@@ -242,7 +242,7 @@ p.run = function(preview) {
 	if (!this.xml) { alert(Locale.get("EJS_E_JSXEXPORT", "read")); return false; }
 	Log.time();
 	
-	//this.getBounds();
+	this.getBounds();
 	this.readLibrary();
 	this.readStage();
 	this.writePubSpec();
@@ -325,7 +325,7 @@ p.preview = function() {
 	return "";
 }
 
-/*p.getBounds = function() {
+p.getBounds = function() {
 	Log.time("getBounds");
 	this.boundsHash = {};
 	var boundsHelper = new BoundsHelper(this.doc, this.frameBounds, this.includeHiddenLayers);
@@ -361,7 +361,7 @@ p.setBounds = function(symbol, name) {
 		bounds[0] = "rect";
 		symbol.frameBounds = "["+bounds.join(", ")+"]";
 	}
-}*/
+}
 
 p.readStage = function() { 
 	Log.time("read stage");
@@ -369,7 +369,7 @@ p.readStage = function() {
 	if (this.xml.DOMTimeline.length() > 1) { Log.warning("EJS_W_F_SCENE"); }
 	var data = deserialize(this.xml.persistentData.PD.(@n == TIMELINE_DATA_NAME).@v.toString())||{};
 	var symbol = new ContainerSymbol(this.xml.DOMTimeline[0], true, data);
-	//this.setBounds(symbol, ".scene0");
+	this.setBounds(symbol, ".scene0");
 	symbol.name = this.docSymbolName;
 	this.symbols.unshift(symbol);
 	Log.time();
@@ -439,7 +439,7 @@ p.exportMovieClip = function(xml) {
 	var data = deserialize(xml.persistentData.PD.(@n == TIMELINE_DATA_NAME).@v.toString())||{};
 	var symbol = new ContainerSymbol(xml.DOMTimeline[0], false, data);
 	symbol.read();
-	//this.setBounds(symbol, xml.@name);
+	this.setBounds(symbol, xml.@name);
 	this.addSymbol(xml.@name, xml.@linkageClassName, "Symbol", symbol);
 	
 	Log.time();

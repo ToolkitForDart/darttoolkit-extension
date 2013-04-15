@@ -53,7 +53,7 @@ p.toString = function(t,scope) {
 	if (blendMode) { 
 		/*if (blendMode == "add") { str += "\n"+t+name+".compositeOperation = \"lighter\";"; }
 		else if (blendMode != "normal") { Log.warning("EJS_W_F_BLENDMODES"); }*/
-		Log.warning("WARNING: BlendModes for Dart not implemented"); // TODO
+		Log.warning("WARNING: BlendModes in Dart StageXL are not implemented"); // TODO
 	}
 	
 	if (this._off) {
@@ -69,7 +69,7 @@ p.toString = function(t,scope) {
 		}
 		var r = this.symbol.rect;
 		if (r) {
-			str += "\n"+t+"..cache("+[fix(r.x-CACHE_PAD,0),fix(r.y-CACHE_PAD,0),fix(r.width+2*CACHE_PAD,0),fix(r.height+2*CACHE_PAD,0)].join(",")+")";
+			str += "\n"+t+"..applyCache("+[fix(r.x-CACHE_PAD,0),fix(r.y-CACHE_PAD,0),fix(r.width+2*CACHE_PAD,0),fix(r.height+2*CACHE_PAD,0)].join(",")+")";
 		}
 	} else if (e.@exportAsBitmap[0] == "true") {
 		Log.warning("EJS_W_F_EXPORTASBMP");

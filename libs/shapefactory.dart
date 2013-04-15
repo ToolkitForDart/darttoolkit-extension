@@ -6,8 +6,6 @@
 const _tween = TimelineTween.get;
 const _ease = TransitionFunction.custom;
 const _shape = _ShapeFactory.create;
-const num _rad2deg = 180/PI;
-const num _deg2rad = PI/180;
 
 class _ShapeFactory {
   Shape _shape;

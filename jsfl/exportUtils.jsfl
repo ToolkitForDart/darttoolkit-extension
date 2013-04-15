@@ -28,12 +28,15 @@ var UNICODE_DIGIT = "\u0030-\u0039\u0660-\u0669\u06F0-\u06F9\u07C0-\u07C9\u0966-
 var UNICODE_IDENTIFIER_ALL = UNICODE_LETTER+UNICODE_COMBINING_MARK+UNICODE_CONNECTOR_PUNCTUATION+UNICODE_DIGIT;
 
 var JS_RESERVED_WORDS = "eval|arguments|NaN|Infinity|undefined|int|byte|char|goto|long|final|float|short|double|native|throws|boolean|abstract|volatile|transient|synchronized|do|if|in|for|let|new|try|var|case|else|enum|eval|false|null|this|true|void|with|break|catch|class|const|super|throw|while|yield|delete|export|import|public|return|static|switch|typeof|default|extends|finally|package|private|continue|debugger|function|arguments|interface|protected|implements|instanceof";
-var CTK_RESERVED_WORDS = "lib|img|cjs";
+var CTK_RESERVED_WORDS = "lib|img|shadow|mode|startPosition|loop|timeline|shape|instance|_tween|_ease|_shape";
+var LIB_RESERVED_WORDS = "Shape|Sprite|MovieClip|Graphic|Shadow|ButtonHelper|Sound|Bitmap";
 var JS_RESERVED_REGEXP = new RegExp("^(?:"+JS_RESERVED_WORDS+"|"+CTK_RESERVED_WORDS+")$","g");
 var IDENTIFIER_REGEXP = new RegExp("[^"+UNICODE_IDENTIFIER_ALL+"]","g");
+var LIB_REGEXP = new RegExp("^("+LIB_RESERVED_WORDS+")$","g");
 
 var varNames = {lib:{},images:{}}
 getVarName = function(name, scope, fallback) {
+
 	var o = varNames;
 	if (scope) {
 		if (o[scope] == null) { o[scope] = {}; }
@@ -45,6 +48,12 @@ getVarName = function(name, scope, fallback) {
 	}
 	name = !name ? "" : String(name);
 	name = name.replace(IDENTIFIER_REGEXP,"");
+
+	if (scope == "__DART_LIB") {
+		name = name.charAt(0).toUpperCase() + name.substr(1);
+		if (name.match(LIB_REGEXP)) name = name + "Symbol";
+	}
+
 	if (name.charAt(0).match(/\d/) != null || name.match(JS_RESERVED_REGEXP)) { name = "_"+name; }
 	if (name.length < 1) { name = fallback || "untitled"; }
 	if (o[name]) {
