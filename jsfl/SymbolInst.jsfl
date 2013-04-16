@@ -51,9 +51,8 @@ p.toString = function(t,scope) {
 	
 	var blendMode = e.@blendMode[0];
 	if (blendMode) { 
-		/*if (blendMode == "add") { str += "\n"+t+name+".compositeOperation = \"lighter\";"; }
-		else if (blendMode != "normal") { Log.warning("EJS_W_F_BLENDMODES"); }*/
-		Log.warning("WARNING: BlendModes in Dart StageXL are not implemented"); // TODO
+		if (blendMode == "add") { str += "\n"+t+"..compositeOperation = \"lighter\""; }
+		else if (blendMode != "normal") { Log.warning("EJS_W_F_BLENDMODES"); }
 	}
 	
 	if (this._off) {

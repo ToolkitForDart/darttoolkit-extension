@@ -500,7 +500,9 @@ p.writePubSpec = function() {
 		+'description: Dart StageXL export from '+this.docName+'\n'
 		+'dependencies:\n'
 		+'  browser: any\n'
-		+'  stagexl: any\n'
+		//+'  stagexl: any\n'
+		+'  stagexl:\n'
+		+'    git: https://github.com/bp74/StageXL.git\n'
 		+'  meta: any\n';
 
 	if (!FLfile.exists(this.pubspecFilePath))
