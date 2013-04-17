@@ -179,6 +179,7 @@ p.docSymbolName;
 p.bitmaps;
 p.sounds;
 p.symbols;
+p.rootSymbol;
 p.symbolMap;
 p.dartFiles;
 p.fps;
@@ -372,6 +373,7 @@ p.readStage = function() {
 	this.setBounds(symbol, ".scene0");
 	symbol.name = this.docSymbolName;
 	this.symbols.unshift(symbol);
+	this.rootSymbol = symbol;
 	Log.time();
 }
 
@@ -532,8 +534,8 @@ p.writeDartLib = function() {
 	Log.time("write library " + this.dartLibFilePath);
 
 	var str =
-		//'library assets;\n'
-		'\n/* Code generated using the Dart Toolkit for Adobe Flash Pro */\n\n'
+		'library '+this.rootSymbol.name+';\n'
+		+'\n/* Code generated using the Dart Toolkit for Adobe Flash Pro */\n\n'
 		+'import \'dart:html\' as html;\n'
 		+'import \'dart:async\';\n'
 		+'import \'dart:math\';\n'
@@ -596,7 +598,7 @@ p.writeDartLib = function() {
 p.writeDartIndex = function() {
 	Log.time("write index " + this.dartFilePath);
 	var str = 
-		 'library $DOCNAME;\n'
+		 'library '+this.rootSymbol.name+';\n'
 		+'\n'
 		+'import \'dart:html\' as html;\n'
 		+'import \'package:stagexl/stagexl.dart\';\n'
