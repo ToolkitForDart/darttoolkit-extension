@@ -42,7 +42,7 @@ p.toString = function(t,scope) {
 	var width = fix(e.@width*1,0);
 	if (attrs)
 	{
-		str += ", new TextFormat("+this.getFont(attrs);
+		str += ", new TextFormat("+this.getStyle(attrs);
 		
 		var textAlign = attrs.@alignment;
 		if (textAlign[0] && textAlign != "justify" && textAlign != "left") 
@@ -76,9 +76,9 @@ p.getText = function(e) {
 	return str.split("\"").join("\\\"").split("\r").join("\\n");
 }
 
-p.getFont = function(attrs) {
+p.getStyle = function(attrs) {
 	if (!attrs[0]) { return '"Arial", 12, 0'; }
-	var face = attrs.@face+"";	
+	var face = this.getFont(attrs);	
 	var bold = attrs.@bold == "true";
 	var italic = attrs.@italic == "true";
 	var size = fix(attrs.@size*1||12,0);
@@ -87,6 +87,11 @@ p.getFont = function(attrs) {
 	if (bold) { str += ", bold:true"; }
 	if (italic) { str += ", italic:true"; }
 	return str;
+}
+
+p.getFont = function(attrs) {
+	if (!attrs[0]) { return 'Arial'; }
+	return attrs.@face+"";
 }
 
 p.getLeading = function(attrs) {

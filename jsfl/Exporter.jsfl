@@ -210,7 +210,7 @@ p.run = function(preview) {
 	this.pubspecFilePath = this.projectPath+"pubspec.yaml";
 	this.htmlFilePath = this.webPath+"index.html";
 	this.dartFilePath = this.webPath+"index.dart";
-	this.dartLibFilePath = this.getDirPath(this.libNS, "EJS_E_JSPATH", true)+this.docName+".dart";
+	this.dartLibFilePath = this.getDirPath(this.libNS, "EJS_E_JSPATH", true)+this.docName+"Lib.dart";
 
 	var conflicts = [];
 	if (this.exportHTML && this.fileChangeManager.checkFile(this.htmlFilePath)) conflicts.push("HTML");
@@ -602,7 +602,7 @@ p.writeDartIndex = function() {
 		+'\n'
 		+'import \'dart:html\' as html;\n'
 		+'import \'package:stagexl/stagexl.dart\';\n'
-		+'import \'$LIB/$DOCNAME.dart\' as lib;\n'
+		+'import \'$LIB/$DOCNAMELib.dart\' as lib;\n'
 		+'\n'
 		+'Stage stage;\n'
 		+'RenderLoop renderLoop;\n'

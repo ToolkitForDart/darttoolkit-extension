@@ -240,7 +240,6 @@ function cleanupProps(props) {
 
 function saveData(data) {
 	getDocument();
-	fl.trace("save " + data);
 	if (data == doc.getDataFromDocument(DOC_DATA_NAME)) { return; }
 	doc.addDataToDocument(DOC_DATA_NAME, "string", data)
 	return "";
