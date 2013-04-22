@@ -598,7 +598,7 @@ p.writeDartLib = function() {
 p.writeDartIndex = function() {
 	Log.time("write index " + this.dartFilePath);
 	var str = 
-		 'library '+this.rootSymbol.name+';\n'
+		 'library '+this.rootSymbol.name+'Lib;\n'
 		+'\n'
 		+'import \'dart:html\' as html;\n'
 		+'import \'package:stagexl/stagexl.dart\';\n'
@@ -618,7 +618,7 @@ p.writeDartIndex = function() {
 
 	if (this.bitmaps.length || this.sounds.length) 
 		str += '  $LIB.loadResources("$LIB/").then(start)\n'
-			+'    .catchError((e) => print(e.error));\n'
+			+'    .catchError((e) => print(e));\n'
 			+'}\n'
 			+'\n'
 			+'void start(result) {\n';
