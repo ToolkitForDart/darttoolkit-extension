@@ -127,12 +127,12 @@ p.getFill = function(paint,isStroke) {
 	} else if (type == "BitmapFill") {
 		Log.warning("EJS_W_BMPFILL");
 		var symbolName = Exporter.instance.getSymbol(paint.@bitmapPath[0]).name;
-		var str = "."+this.cmd["b"+c]+"("+IMAGES_VAR_+symbolName;
+		var str = "."+this.cmd["b"+c]+"(new "+symbolName+"()";
 		var mtx = paint.Matrix[0];
 		// TODO: not sure how to interpret the matrix from JSX, so disabled for now:
 		if (false && !isStroke && mtx) {
 			mtx = [fix(mtx.@a/20*1),fix(mtx.@b*1),fix(mtx.@c*1),fix(mtx.@d/20*1),fix(mtx.@tx*1),fix(mtx.@ty*1)];
-			str += ", null, new "+CREATEJS_VAR_+"Matrix2D("+mtx.join(",")+")";
+			str += ", null, new Matrix2D("+mtx.join(",")+")";
 		}
 		return str+")";
 	}

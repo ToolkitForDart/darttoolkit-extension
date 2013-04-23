@@ -42,6 +42,9 @@ class _ShapeFactory {
   _ShapeFactory beginRadialGradientFill(List<int> colors, List<num> stops, num x0, num y0, num r0, num x1, num y1, num r1) {
     return rf(colors, stops, x0, y0, r0, x1, y1, r1);
   }
+  _ShapeFactory beginBitmapFill(Bitmap image, [String repeat, Matrix mat]) {
+    return bf(image, repeat, mat);
+  }
   _ShapeFactory beginFill([int color]) {
     return f(color);
   }
@@ -114,6 +117,20 @@ class _ShapeFactory {
     }
     _endFill = () {
       _graphics.fillGradient(gradient);
+    };
+    return this;
+  }
+  _ShapeFactory bf(Bitmap image, String repeat, Matrix mat) {
+    var bmp = image.bitmapData;
+    GraphicsPattern pattern = null;
+    switch (repeat) {
+      case "repeat-x": pattern = new GraphicsPattern.repeatX(bmp, mat); break;
+      case "repeat-y": pattern = new GraphicsPattern.repeatY(bmp, mat); break;
+      case "no-repeat": pattern = new GraphicsPattern.noRepeat(bmp, mat); break;
+      default: pattern = new GraphicsPattern.repeat(bmp, mat); break;
+    }
+    _endFill = () {
+      _graphics.fillPattern(pattern);
     };
     return this;
   }
