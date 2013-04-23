@@ -58,7 +58,7 @@ p.toString = function(t, mc) {
 	if (gs.length == 1) {
 		// single frame.
 		var o = gs[0];
-		str += "\n"+t+"var "+shapeName+" = _shape("+o.x+","+o.y+")"+o.data+".shape;";
+		str += "\n"+t+"var "+shapeName+" = _draw("+o.x+","+o.y+")"+o.data+".shape;";
 		/*if (o.scaleX != 1 || o.scaleY != 1 || o.rotation || o.skewX || o.skewY || o.regX || o.regY)
 			str += exportTransform(e0, name, '\n'+t);*/
 		str += defMask;
@@ -76,7 +76,7 @@ p.toString = function(t, mc) {
 			var data = o.data;
 			if (data && !graphicObjs[data]) {
 				name = getVarName(this.maskName+"_graphics_"+o.index, this.nameSpace);
-				defs.push( t+"var "+name+" = _shape(0,0)"+data+".graphics;" );
+				defs.push( t+"var "+name+" = _draw(0,0)"+data+".graphics;" );
 				// graphicObjs[data] = name; // This isn't very effective due to rounding differences, we'll skip it for now.
 			} else if (data) {
 				// reuse existing graphics:

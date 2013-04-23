@@ -40,9 +40,10 @@ p.toString = function(t,scope) {
 	var attrs = e.DOMTextRun[0].DOMTextAttrs[0];
 	var offset = {x:0,y:0}
 	var width = fix(e.@width*1,0);
+	var size = fix(attrs.@size*1||12,0);
 	if (attrs)
 	{
-		str += ", new TextFormat("+this.getStyle(attrs);
+		str += ", \n"+t+"  new TextFormat("+this.getStyle(attrs);
 		
 		var textAlign = attrs.@alignment;
 		if (textAlign[0] && textAlign != "justify" && textAlign != "left") 
@@ -50,7 +51,8 @@ p.toString = function(t,scope) {
 		if (e.name() == "DOMStaticText" || e.@lineType != "single") {
 			// potentially multiline.
 			str += this.getLeading(attrs);
-		}		
+		}
+		str += ", topMargin:" + fix(size / 8);
 		str += ')';
 		//if (textAlign == "center") { offset.x = width/2; }
 		//else if (textAlign == "right") { offset.x = width; }
@@ -61,7 +63,7 @@ p.toString = function(t,scope) {
 	str += ';'
 	
 	//if (e.@autoExpand != "true")
-	str += "\n"+t+name+".width = "+(width+4)+";";
+	str += "\n"+t+name+".width = "+(width+size/4)+";";
 	
 	return str;
 }
@@ -124,9 +126,9 @@ p.getProps = function(e) {
 
 	o.text = this.getText(e);
 	o.font = this.getFont(attrs);
-	o.color = (attrs.@fillColor+"")||"#000000";
+	o.textColor = getColor(attrs.@fillColor+"");
 	o.textAlign = textAlign;
-	o.lineHeight = (attrs.@lineSpacing*1);
-	o.lineWidth = fix(e.@width*1,0);
+	o.leading = (attrs.@lineSpacing*1) - fix(attrs.@size*1||12,0);
+	o.width = fix(e.@width*1,0) + 4;
 	return o;
 }

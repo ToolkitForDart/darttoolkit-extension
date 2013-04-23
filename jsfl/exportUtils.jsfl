@@ -28,7 +28,7 @@ var UNICODE_DIGIT = "\u0030-\u0039\u0660-\u0669\u06F0-\u06F9\u07C0-\u07C9\u0966-
 var UNICODE_IDENTIFIER_ALL = UNICODE_LETTER+UNICODE_COMBINING_MARK+UNICODE_CONNECTOR_PUNCTUATION+UNICODE_DIGIT;
 
 var JS_RESERVED_WORDS = "eval|arguments|NaN|Infinity|undefined|int|byte|char|goto|long|final|float|short|double|native|throws|boolean|abstract|volatile|transient|synchronized|do|if|in|for|let|new|try|var|case|else|enum|eval|false|null|this|true|void|with|break|catch|class|const|super|throw|while|yield|delete|export|import|public|return|static|switch|typeof|default|extends|finally|package|private|continue|debugger|function|arguments|interface|protected|implements|instanceof";
-var CTK_RESERVED_WORDS = "lib|img|shadow|mode|startPosition|loop|timeline|shape|instance|_tween|_ease|_shape";
+var CTK_RESERVED_WORDS = "lib|img|shadow|mode|startPosition|loop|timeline|shape|instance|_tween|_ease|_draw";
 var LIB_RESERVED_WORDS = "Shape|Sprite|MovieClip|Graphic|Shadow|ButtonHelper|Sound|Bitmap";
 var JS_RESERVED_REGEXP = new RegExp("^(?:"+JS_RESERVED_WORDS+"|"+CTK_RESERVED_WORDS+")$","g");
 var IDENTIFIER_REGEXP = new RegExp("[^"+UNICODE_IDENTIFIER_ALL+"]","g");
@@ -206,9 +206,9 @@ getMatrix = function(xml) {
 
 getColor = function(s) {
 	var hex = ""+s;
-	if (hex.length == 0) return "0";
+	if (hex.length == 0) return 0;
 	if (hex.length > 0 && hex.charAt(0) == "#") return "0x" + hex.substr(1);
-	return "0";
+	return 0;
 }
 
 

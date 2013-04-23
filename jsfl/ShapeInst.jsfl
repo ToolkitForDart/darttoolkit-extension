@@ -49,7 +49,7 @@ p.toString = function(t,scope) {
 	
 	var o = getElementTransform(e);
 	var str = 
-		 name+' = _shape('+o.x+','+o.y+')'
+		 name+' = _draw('+o.x+','+o.y+')'
 		+'\n'+t+cmds+'.shape';
 	if (o.scaleX != 1 || o.scaleY != 1 || o.rotation || o.skewX || o.skewY || o.regX || o.regY)
 		str += exportTransform(e, name, '\n'+t);

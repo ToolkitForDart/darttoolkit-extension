@@ -5,7 +5,7 @@
 
 const _tween = TimelineTween.get;
 const _ease = TransitionFunction.custom;
-const _shape = _ShapeFactory.create;
+const _draw = _ShapeFactory.create;
 
 class _ShapeFactory {
   Shape _shape;

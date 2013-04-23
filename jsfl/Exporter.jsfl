@@ -534,7 +534,7 @@ p.writeDartLib = function() {
 	Log.time("write library " + this.dartLibFilePath);
 
 	var str =
-		'library '+this.rootSymbol.name+';\n'
+		'library '+this.rootSymbol.name+'Lib;\n'
 		+'\n/* Code generated using the Dart Toolkit for Adobe Flash Pro */\n\n'
 		+'import \'dart:html\' as html;\n'
 		+'import \'dart:async\';\n'
@@ -598,7 +598,7 @@ p.writeDartLib = function() {
 p.writeDartIndex = function() {
 	Log.time("write index " + this.dartFilePath);
 	var str = 
-		 'library '+this.rootSymbol.name+'Lib;\n'
+		 'library '+this.rootSymbol.name+';\n'
 		+'\n'
 		+'import \'dart:html\' as html;\n'
 		+'import \'package:stagexl/stagexl.dart\';\n'
