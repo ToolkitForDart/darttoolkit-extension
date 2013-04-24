@@ -37,11 +37,12 @@ p.toString = function(t) {
 
 p.exportFile = function(sourcePath, destPath, exportPath) {
 	var source = this.xml.@href;
-	var suffix = source.substr(source.lastIndexOf(".")).toLowerCase();
+	var filename = source.split("/").pop();
+	//var suffix = source.substr(source.lastIndexOf(".")).toLowerCase();
 
 	// NOTE: fixAssetName should be removed in future versions:
-	this.src = destPath+  fixAssetName(this.name)  +suffix;
-	if (exportPath && !copyFile(sourcePath+source, exportPath+  fixAssetName(this.name)  +suffix, true)) {
+	this.src = destPath + filename;
+	if (exportPath && !copyFile(sourcePath+source, exportPath + filename, true)) {
 		Log.error("EJS_E_IMGEXP",this.src);
 	}
 }
