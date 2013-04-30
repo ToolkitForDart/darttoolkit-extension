@@ -131,9 +131,6 @@ Exporter = function(doc, props) {
 	this.symbolMap = {};
 	//this.dartFiles = EASELJS_FILES;
 
-	this.projectPath = this.getDirPath(this.docName + "-dart", "EJS_E_JSPATH", true);
-	this.webPath = this.getDirPath("web", "EJS_E_JSPATH", true);
-	
 	this.fileChangeManager = new FileChangeManager(CHANGE_LOG_PATH);
 }
 var p = Exporter.prototype;
@@ -195,6 +192,7 @@ p.boundsHash;
 p.enableMouseOver;
 p.includeMotionGuidePlugin;
 
+
 p.run = function(preview) {
 
 	Log.clear();
@@ -206,6 +204,9 @@ p.run = function(preview) {
 
 	Log.time("run export");
 	this.validateSettings();
+	this.detectProjectPath();
+	this.webPath = this.getDirPath("web", "EJS_E_JSPATH", true);
+
 	this.hasTweens = this.enableMouseOver = false;
 	this.pubspecFilePath = this.projectPath+"pubspec.yaml";
 	this.htmlFilePath = this.webPath+"index.html";
@@ -289,6 +290,19 @@ p.validateSettings = function() {
 	//this.createjsNS_dot = this.createjsNS?this.createjsNS+".":"";
 	
 	this.fps = this.doc.frameRate;
+}
+
+p.detectProjectPath = function() {
+
+	// use the output path if it's empty or already a Dart project
+	var content = getFolderContent(this.outputPath);
+	if (!content.length || listContains(content, "pubspec.yaml") || listContains(content, "packages")) {
+		this.projectPath = this.outputPath;
+		return;
+	}
+	// if not, create a sub-directory
+	this.projectPath = this.getDirPath(this.docName + "-dart", "EJS_E_JSPATH", true);
+	this.webPath = this.getDirPath("web", "EJS_E_JSPATH", true);
 }
 
 p.loadXML = function(path) {

@@ -50,7 +50,6 @@ resolveRelativePath = function(target,path) {
 	return dir+"/"+path;
 }
 
-
 extractFileName = function(path, includeSuffix, smart) {
 	if (!path) return "#PATHERROR#"
 	var index = path.lastIndexOf("/");
@@ -134,3 +133,22 @@ copyFile = function(sourceURI, destURI, overwrite) {
 	}
 	return FLfile.copy(sourceURI, destURI);
 }
+
+getFolderContent = function(path) {
+	var all = FLfile.listFolder(path);
+	var clean = [];
+	if (all && all.length)
+		for(var i = 0; i<all.length; i++) {
+			var p = all[i];
+			if (!p.length || p.charAt(0) == '.') continue;
+			clean.push(p);
+		}
+	return clean;
+}
+
+listContains = function(list, item) {
+	for(var i=0; i<list.length; i++)
+		if (list[i] == item) return true;
+	return false;
+}
+

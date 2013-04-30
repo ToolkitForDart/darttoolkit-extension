@@ -167,6 +167,7 @@ function getDefaultSettings() {
 		Locale.load(Locale.getLocaleURI(LOCALE_PATH));
 		alert(Locale.get("EJS_UI_DEFAULT_SETTINGS_ERR",getDisplayPath(DEFAULT_SETTINGS_PATH)));
 	}
+	fl.trace("getDefaultSettings " + str);
 	return str;
 }
 
@@ -247,7 +248,8 @@ function saveData(data) {
 
 function loadData() {
 	getDocument();
-	return doc ? doc.getDataFromDocument(DOC_DATA_NAME) : "";
+	var data = doc ? doc.getDataFromDocument(DOC_DATA_NAME) : "";
+	return data;
 }
 
 function loadTimelineData() {
