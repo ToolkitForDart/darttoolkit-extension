@@ -1,7 +1,5 @@
 
-/**
- * Automation helpers
- */
+/* SHORTCUTS */
 
 const _tween = TimelineTween.get;
 const _ease = TransitionFunction.custom;

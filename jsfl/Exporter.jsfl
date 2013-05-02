@@ -538,7 +538,7 @@ p.writeDartLib = function() {
 
 	var str =
 		'library '+this.rootSymbol.name+'Lib;\n'
-		+'\n/* Code generated using the Dart Toolkit for Adobe Flash Pro - do not edit */\n\n'
+		+'\n/* WARNING: code generated using the Dart Toolkit for Adobe Flash Professional - do not edit */\n\n'
 		+'import \'dart:html\' as html;\n'
 		+'import \'dart:async\';\n'
 		+'import \'dart:math\';\n'
