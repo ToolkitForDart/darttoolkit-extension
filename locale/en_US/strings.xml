@@ -2,12 +2,12 @@
 
 <locale language="en">
 	<!-- PANEL UI -->
-	<s key="EJS_UI_HELPURL">http://www.adobe.com/go/darttoolkithowto</s><!-- don't forget EJS_UI_INSTALLPANEL if urls change -->
+	<s key="EJS_UI_HELPURL">http://stagexl.org</s><!-- don't forget EJS_UI_INSTALLPANEL if urls change -->
 	<s key="EJS_UI_EMBEDFONT">true</s>
 	
 	<s key="EJS_UI_NOFLA">You must have an FLA open to publish.</s>
 	<s key="EJS_UI_OUTPUTPATH">The output directory could not be found. Please update it and try again. [%DETAILS%]</s>
-	<s key="EJS_UI_DEFAULT_SETTINGS_ERR">The default settings file is missing or damaged. Reinstall the panel and try again. [%DETAILS%]</s><!-- NEW v1.1 -->
+	<s key="EJS_UI_DEFAULT_SETTINGS_ERR">The default settings file is missing or damaged. Reinstall the panel and try again. [%DETAILS%]</s>
 	<s key="EJS_UI_NO_OUTPUTPATH">Save the FLA or specify an output path.</s>
 	<s key="EJS_UI_SAVETO">Save output to...</s>
 	
@@ -17,21 +17,20 @@
 	
 	<s key="EJS_UI_TITLE_EXPORT_SETTINGS">Publish settings</s>
 	<s key="EJS_UI_LABEL_OUTPUT">Output:</s>
-	<s key="EJS_UI_LABEL_EDIT_SETTINGS">Edit Settings...</s><!-- NEW v1.1 -->
+	<s key="EJS_UI_LABEL_EDIT_SETTINGS">Edit Settings...</s>
 	
 	<s key="EJS_UI_LABEL_EXPORT_HTML">Publish HTML and Dart index</s>
-	<s key="EJS_UI_TITLE_ASSETS">Asset Paths</s><!-- NEW v1.1 -->
+	<s key="EJS_UI_TITLE_ASSETS">Asset Paths</s>
 	<s key="EJS_UI_LABEL_IMAGES">Images:</s>
 	<s key="EJS_UI_LABEL_SOUNDS">Sounds:</s>
 	<s key="EJS_UI_LABEL_LIBS">Dart:</s>
-	<s key="EJS_UI_TITLE_NAMESPACES">Namespaces</s><!-- NEW v1.1 -->
-	<s key="EJS_UI_LABEL_LIB">Symbols:</s><!-- NEW v1.1 -->
-	<s key="EJS_UI_LABEL_CREATEJS">Dart:</s><!-- NEW v1.1 -->
-	<s key="EJS_UI_TITLE_OPTIONS">Options</s><!-- NEW v1.1 -->
+	<s key="EJS_UI_TITLE_NAMESPACES">Namespaces</s>
+	<s key="EJS_UI_LABEL_WEB">Index:</s>
+	<s key="EJS_UI_LABEL_LIB">Symbols:</s>
+	<s key="EJS_UI_LABEL_CREATEJS">Dart:</s>
+	<s key="EJS_UI_TITLE_OPTIONS">Options</s>
 	<s key="EJS_UI_LABEL_HIDDEN_LAYERS">Include hidden layers</s>
 	<s key="EJS_UI_LABEL_COMPACT_PATHS">Compact shapes</s>
-	<s key="EJS_UI_LABEL_HOSTED_LIBS">Hosted libs</s>
-	<s key="EJS_UI_LABEL_FRAME_BOUNDS">Multiframe bounds</s><!-- NEW v1.1 -->
 	
 	<s key="EJS_UI_TITLE_TIMELINE_SETTINGS">Timeline Settings</s>
 	<s key="EJS_UI_LABEL_LOOP">Loop</s>
@@ -46,7 +45,7 @@
 	<s key="EJS_UI_HTMLMISSING">The HTML file could not be found for preview. Enable "Publish HTML", or disable "Preview". [%DETAILS%]</s>
 	
 	<s key="EJS_UI_OPENPANEL">%DETAILS% panel must be open to publish.</s>
-	<s key="EJS_UI_INSTALLPANEL">Please install the %DETAILS% panel. Visit http://www.adobe.com/go/darttoolkithowto for more information</s><!-- NEW v1.1 -->
+	<s key="EJS_UI_INSTALLPANEL">Please install the %DETAILS% panel. Visit http://stagexl.org for more information</s>
 	<s key="EJS_UI_PUBLISHCMD">Publish for Dart</s>
 	
 	<!-- WARNINGS -->
@@ -82,7 +81,7 @@
 	
 	<s key="EJS_W_TRANSFORMPOINT">Modifying the transform point in a tween can produce unexpected results.</s>
 	<s key="EJS_W_BUTTON">Buttons are published as MovieClip symbols without interactivity.</s>
-	<s key="EJS_W_SHADOW">Shadow and glow filters are very expensive effects, and not all options are supported.</s><!-- UPDATED 1.2* -->
+	<s key="EJS_W_SHADOW">Shadow and glow filters are very expensive effects, and not all options are supported.</s>
 	<s key="EJS_W_TEXTFIELD">Input and static text fields are published as dynamic text fields.</s>
 	<s key="EJS_W_TEXT">Text support is limited. It is generally recommended to include text as HTML elements (see DOMElement).</s>
 	<s key="EJS_W_BMPFILL">Bitmap fills will not be transformed in the output, and may render differently.</s>
@@ -92,14 +91,14 @@
 	<s key="EJS_W_LARGESHAPE">A shape has exceeded the maximum allowable pixel dimensions. It may display improperly.</s>
 	<s key="EJS_W_ROTATION_NONE">Tween rotate mode "none" is not supported.</s>
 	<s key="EJS_E_EMPTYSYMBOL">Empty symbol. [%DETAILS%]</s> <!-- this is now a warning, despite it's coding -->
-	<s key="EJS_W_BITMAPBTN">Content with both Bitmaps and Buttons may generate local security errors in some browsers if run from the local file system.</s><!-- NEW v1.2 -->
-	<s key="EJS_W_ORIENTTOPATH">Orient to path support is limited.</s><!-- NEW v1.2 -->
+	<s key="EJS_W_BITMAPBTN">Content with both Bitmaps and Buttons may generate local security errors in some browsers if run from the local file system.</s>
+	<s key="EJS_W_ORIENTTOPATH">Orient to path support is limited.</s>
 	
 	
 	<!-- TIMELINE MESSAGES -->
 	<s key="EJS_W_TWEENERROR">Layers with classic tweens must contain only a single symbol instance.</s>
 	<s key="EJS_W_SHAPETWEEN">Shape tweens are not supported.</s><!-- UNUSED IN v1.1 -->
-	<s key="EJS_W_MOTIONTWEEN">Motion tweens are published as frame by frame animations. Use classic tweens where possible.</s><!-- NEW v1.1 -->
+	<s key="EJS_W_MOTIONTWEEN">Motion tweens are published as frame by frame animations. Use classic tweens where possible.</s>
 
 	
 	
@@ -109,10 +108,10 @@
 	<s key="EJS_E_SNDPATH">Sound export path could not be resolved.</s>
 	<s key="EJS_E_JSPATH">JS library export path could not be resolved.</s>
 	<s key="EJS_E_LIBMISSING">JS library not found. [%DETAILS%]</s>
-	<s key="EJS_E_IMGEXP">Error exporting image. The file may be in use by another application. [%DETAILS%]</s><!-- UPDATED v1.1 -->
-	<s key="EJS_E_SNDEXP">Error exporting sound. The file may be in use by another application. Check that the preview HTML is not open in your browser. [%DETAILS%]</s><!-- UPDATED v1.1 -->
+	<s key="EJS_E_IMGEXP">Error exporting image. The file may be in use by another application. [%DETAILS%]</s>
+	<s key="EJS_E_SNDEXP">Error exporting sound. The file may be in use by another application. Check that the preview HTML is not open in your browser. [%DETAILS%]</s>
 	<s key="EJS_E_SCOPECONFLICT">Scope name conflicts with existing variable name. [%DETAILS%]</s>
-	<s key="EJS_E_JSXEXPORT">An unexpected error occurred during export. [%DETAILS%]</s><!-- NEW v1.1 -->
+	<s key="EJS_E_JSXEXPORT">An unexpected error occurred during export. [%DETAILS%]</s>
 	<s key="EJS_E_FLCREATEJS">A supporting library was not loaded correctly. Exit Extension Manager if it is open and restart Flash Pro.</s><!-- NEW v1.2 -->
 
 </locale>

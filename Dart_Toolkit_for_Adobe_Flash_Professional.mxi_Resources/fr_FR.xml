@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE asf SYSTEM "http://ns.adobe.com/asf/asf_1_0.dtd">
+<asf xmlns="http://ns.adobe.com/asf" locale="en_US" version="1.0">
+	<set name="DefaultSet">
+		<str name="desc">
+			<val>Dart Toolkit pour Adobe Flash Professional est une extension pour Flash Professional CC qui permet aux designers et animateurs de créer des éléments graphiques pour des projets HTML5 basés sur les librairies open source Dart. Cette extension supporte la plupart des fonctionnalités d'animation et d'illustration de Flash Professional, y compris les formes vectorielles, les images, les transitions classiques, les sons et les scripts Dart sur les séquences d'images. En un clic, Toolkit for Dart exporte le contenu du stage et de la librairie en un projet Dart prêt à l'emploi pour créer rapidement du contenu expressif en HTML5 à l'aide du langage Dart.</val>
+		</str>
+		<str name="ui-access">
+			<val>Après l'installation, le panneau Toolkit for Dart se trouve dans le menu Fenêtre > Autre panneaux > Toolkit for Dart. Une commande directe 'Publish for Dart' se trouve également dans le menu Commandes. Vous pouvez associer un raccourcis clavier à cette commande depuis le dialogue des Raccourcis Clavier.</val>
+		</str>
+	</set>
+</asf>
+

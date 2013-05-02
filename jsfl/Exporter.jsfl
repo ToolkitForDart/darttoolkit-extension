@@ -112,6 +112,7 @@ Exporter = function(doc, props) {
 	this.compactPaths = props.compactPaths;
 	//this.hostedLibs = props.hostedLibs && HOSTED_LIBS_ENABLED;
 	this.frameBounds = props.frameBounds;
+	this.webNS = props.webNS;
 	this.libNS = props.libNS;
 	this.imagesNS = props.imagesNS;
 	//this.createjsNS = props.createjsNS;
@@ -152,22 +153,15 @@ p.projectPath;
 p.webPath;
 p.imagesPath;
 p.soundsPath;
-//p.libraryPath;
 p.exportImages;
-//p.exportLibs;
 p.exportSounds;
 p.exportHTML;
 p.compactPaths;
 p.includeHiddenLayers;
 p.useTicks = true;
-//p.hostedLibs;
-//p.frameBounds;
+p.webNS;
 p.libNS;
 p.imagesNS;
-//p.createjsNS;
-p.libNS_dot;
-p.imagesNS_dot;
-//p.createjsNS_dot;
 p.loopTimeline;
 
 // working data:
@@ -182,6 +176,7 @@ p.dartFiles;
 p.fps;
 p.pubspecFilePath;
 p.dartFilePath;
+p.dartMainPath;
 p.dartLibFilePath;
 p.htmlFilePath;
 p.fileChangeManager;
@@ -205,13 +200,15 @@ p.run = function(preview) {
 	Log.time("run export");
 	this.validateSettings();
 	this.detectProjectPath();
-	this.webPath = this.getDirPath("web", "EJS_E_JSPATH", true);
+	this.webPath = this.getDirPath(this.webNS, "EJS_E_JSPATH", true);
+	this.libPath = this.getDirPath(this.libNS, "EJS_E_JSPATH", true);
 
 	this.hasTweens = this.enableMouseOver = false;
 	this.pubspecFilePath = this.projectPath+"pubspec.yaml";
 	this.htmlFilePath = this.webPath+"index.html";
 	this.dartFilePath = this.webPath+"index.dart";
-	this.dartLibFilePath = this.getDirPath(this.libNS, "EJS_E_JSPATH", true)+this.docName+"Lib.dart";
+	this.dartMainPath = this.libPath+this.docName+".dart";
+	this.dartLibFilePath = this.libPath+this.docName+"Lib.dart";
 
 	var conflicts = [];
 	if (this.exportHTML && this.fileChangeManager.checkFile(this.htmlFilePath)) conflicts.push("HTML");
@@ -249,18 +246,14 @@ p.run = function(preview) {
 	this.readStage();
 	this.writePubSpec();
 	
-	this.exportMedia(this.bitmaps, this.libNS+"/"+this.imagesPath, this.exportImages, "EJS_E_IMGPATH");
-	this.exportMedia(this.sounds, this.libNS+"/"+this.soundsPath, this.exportSounds, "EJS_E_SNDPATH");
+	this.exportMedia(this.bitmaps, this.webNS+"/"+this.imagesPath, this.exportImages, "EJS_E_IMGPATH");
+	this.exportMedia(this.sounds, this.webNS+"/"+this.soundsPath, this.exportSounds, "EJS_E_SNDPATH");
 
 	this.writeDartLib();
+	if (!FLfile.exists(this.dartMainPath)) this.writeDartMain();
 
-	//if (this.hasTweens) { this.dartFiles = this.dartFiles.concat(TWEENJS_FILES); }
-	//if (this.sounds.length || this.bitmaps.length) { this.dartFiles = this.dartFiles.concat(PRELOADJS_FILES); }
-	//if (this.sounds.length) { this.dartFiles = this.dartFiles.concat(SOUNDJS_FILES); }
-	
 	if (this.enableMouseOver && this.bitmaps.length) { Log.warning("EJS_W_BITMAPBTN"); }
 
-	//if (this.exportLibs && !this.hostedLibs) { this.copyJsFiles(); }
 	if (this.exportHTML) { 
 		this.writeDartIndex();
 		this.writeHTML(); 
@@ -281,13 +274,10 @@ p.run = function(preview) {
 p.validateSettings = function() {
 	if (this.imagesPath.charAt(this.imagesPath.length-1) != "/") { this.imagesPath += "/"; }
 	if (this.soundsPath.charAt(this.soundsPath.length-1) != "/") { this.soundsPath += "/"; }
-	//if (this.libraryPath.charAt(this.libraryPath.length-1) != "/") { this.libraryPath += "/"; }
 	if (this.outputPath.charAt(this.outputPath.length-1) != "/") { this.outputPath += "/"; }
 	
 	if (!this.libNS) this.libNS = "lib";
-	this.libNS_dot = this.libNS?this.libNS+".":"";
-	this.imagesNS_dot = this.imagesNS?this.imagesNS+".":"";
-	//this.createjsNS_dot = this.createjsNS?this.createjsNS+".":"";
+	if (!this.webNS) this.webNS = "web";
 	
 	this.fps = this.doc.frameRate;
 }
@@ -296,13 +286,12 @@ p.detectProjectPath = function() {
 
 	// use the output path if it's empty or already a Dart project
 	var content = getFolderContent(this.outputPath);
-	if (!content.length || listContains(content, "pubspec.yaml") || listContains(content, "packages")) {
+	if (!content.length || listContains(content, "pubspec.yaml")) {
 		this.projectPath = this.outputPath;
 		return;
 	}
 	// if not, create a sub-directory
 	this.projectPath = this.getDirPath(this.docName + "-dart", "EJS_E_JSPATH", true);
-	this.webPath = this.getDirPath("web", "EJS_E_JSPATH", true);
 }
 
 p.loadXML = function(path) {
@@ -493,8 +482,8 @@ p.exportMedia = function(symbols,destPath,exportFiles,errCode) {
 }
 
 p.getDirPath = function(path,errCode, createDir) {
-	var rel = this.webPath;
-	if (!rel) rel = this.projectPath;
+	var rel = /*this.webPath;
+	if (!rel) rel =*/ this.projectPath;
 	if (!rel) rel = this.outputPath;
 	var dirPath = resolveRelativePath(rel,path);
 	if (dirPath == null) { Log.error(errCode); return; }
@@ -513,7 +502,7 @@ p.writePubSpec = function() {
 
 	var str =
 		 'name: '+this.docName+'\n'
-		+'description: Dart StageXL export from '+this.docName+'\n'
+		+'description: '+this.docName+'\n'
 		+'dependencies:\n'
 		+'  browser: any\n'
 		//+'  stagexl: any\n'
@@ -530,7 +519,7 @@ p.writeHTML = function() {
 	Log.time("write HTML " + this.htmlFilePath);
 	var str = 
 		 '<!DOCTYPE html>\n<html>\n<head>\n<meta charset="UTF-8">'
-		+'\n<title>Dart StageXL export from '+this.docName+'</title>\n</head>'
+		+'\n<title>'+this.docName+'</title>\n</head>'
 	
 	// write the body:
 		+'\n\n<body style="background-color:#D4D4D4">'
@@ -549,7 +538,7 @@ p.writeDartLib = function() {
 
 	var str =
 		'library '+this.rootSymbol.name+'Lib;\n'
-		+'\n/* Code generated using the Dart Toolkit for Adobe Flash Pro */\n\n'
+		+'\n/* Code generated using the Dart Toolkit for Adobe Flash Pro - do not edit */\n\n'
 		+'import \'dart:html\' as html;\n'
 		+'import \'dart:async\';\n'
 		+'import \'dart:math\';\n'
@@ -609,79 +598,72 @@ p.writeDartLib = function() {
 	Log.time();
 }
 
-p.writeDartIndex = function() {
-	Log.time("write index " + this.dartFilePath);
+p.writeDartMain = function() {
+	Log.time("write main " + this.dartMainPath);
 	var str = 
 		 'library '+this.rootSymbol.name+';\n'
 		+'\n'
 		+'import \'dart:html\' as html;\n'
 		+'import \'package:stagexl/stagexl.dart\';\n'
-		+'import \'$LIB/$DOCNAMELib.dart\' as lib;\n'
+		+'import \'$DOCNAMELib.dart\' as lib;\n'
 		+'\n'
-		+'Stage stage;\n'
-		+'RenderLoop renderLoop;\n'
-		+'$LIB.$DOCSYMBOL exportRoot;\n'
+		+'class $DOCNAME\n'
+		+'{\n'
+		+'  Stage stage;\n'
+		+'  RenderLoop renderLoop;\n'
+		+'  $LIB.$DOCSYMBOL exportRoot;\n'
 		+'\n'
-		+'void main() {\n'
-		+'  stage = new Stage("$STAGE", html.document.query("#$STAGE"), '+this.doc.width+', '+this.doc.height+', '+this.fps+');\n'
+		+'  $DOCNAME() {\n'
+		+'    stage = new Stage("$STAGE", html.document.query("#$STAGE"), '+this.doc.width+', '+this.doc.height+', '+this.fps+');\n'
 		+'\n'
-		+'  renderLoop = new RenderLoop();\n'
-		+'  renderLoop.addStage(stage);\n'
+		+'    renderLoop = new RenderLoop();\n'
+		+'    renderLoop.addStage(stage);\n'
 		+'  \n';
 
 	if (this.bitmaps.length || this.sounds.length) 
-		str += '  $LIB.loadResources("$LIB/").then(start)\n'
-			+'    .catchError((e) => print(e));\n'
-			+'}\n'
+		str += '    $LIB.loadResources("./").then(_start)\n'
+			+'      .catchError((e) => print(e));\n'
+			+'  }\n'
 			+'\n'
-			+'void start(result) {\n';
+			+'  void _start(result) {\n';
 
-	str += '  exportRoot = new $LIB.$DOCSYMBOL();\n';
+	str += '    exportRoot = new $LIB.$DOCSYMBOL();\n';
 
 	if (!this.loopTimeline && this.symbols[0].movieclip) 
-		str += '  exportRoot.loop = false;\n';
+		str += '    exportRoot.loop = false;\n';
 
 	str +=
 		 '\n'
-		+'  stage.addChild(exportRoot);\n'
-		+'}';
+		+'    stage.addChild(exportRoot);\n'
+		+'  }\n'
+		+'}\n';
 
 	str = str.replace("$LIB", this.libNS, "g")
 		.replace("$DOCNAME", this.docName, "g")
 		.replace("$STAGE", CANVAS_ID, "g")
 		.replace("$DOCSYMBOL", this.docSymbolName, "g");
 
+	FLfile.write(this.dartMainPath, str);
+	this.fileChangeManager.updateFile(this.dartMainPath);
+	Log.time();
+}
+
+p.writeDartIndex = function() {
+	Log.time("write index " + this.dartFilePath);
+
+	str = 'import \'dart:html\' as html;\n'
+		+ 'import \'../lib/$DOCNAME.dart\';\n'
+		+ '\n'
+		+ 'void main() {\n'
+	  	+ '  new BannerV5();\n'
+		+ '}\n';
+
+	str = str.replace("$DOCNAME", this.docName, "g");
+
 	FLfile.write(this.dartFilePath, str);
 	this.fileChangeManager.updateFile(this.dartFilePath);
 	Log.time();
 }
-
-p.getNSStr = function(ns) {
-	if (!ns) { return "this"; }
-	return ns+" = "+ns+"||{}";
-}
-
-/*p.copyJSFiles = function() {
-	Log.time("copy js files");
-	var l = this.dartFiles.length;
-	var jsPath = this.getDirPath(this.libraryPath,"EJS_E_JSPATH",l>0);
-	if (!jsPath) { return; }
-	
-	for (var i=0; i<l; i++) {
-		var file = this.dartFiles[i];
-		var destURI = jsPath+file;
-		
-		if (!FLfile.exists(JS_LIB_PATH+file)) {
-			Log.error("EJS_E_LIBMISSING",FLfile.uriToPlatformPath(JS_LIB_PATH+file));
-			continue;
-		} else if (FLfile.exists(destURI)) {
-			FLfile.remove(destURI);
-		}
-		
-		FLfile.copy(JS_LIB_PATH+file, destURI);
-	}
-	Log.time();
-}*/
 
 p.readErrors = function() {
 	var path = this.xmlPath+"errors.xml";

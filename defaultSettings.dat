@@ -18,6 +18,8 @@ outputPath
 ./
 compactPaths
 true
+webNS
+web
 libNS
 lib
 exportHTML
