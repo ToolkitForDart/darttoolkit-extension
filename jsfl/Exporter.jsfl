@@ -651,8 +651,7 @@ p.writeDartMain = function() {
 p.writeDartIndex = function() {
 	Log.time("write index " + this.dartFilePath);
 
-	str = 'import \'dart:html\' as html;\n'
-		+ 'import \'../lib/$DOCNAME.dart\';\n'
+	str = 'import \'../lib/$DOCNAME.dart\';\n'
 		+ '\n'
 		+ 'void main() {\n'
 	  	+ '  new BannerV5();\n'
