@@ -250,7 +250,8 @@ p.run = function(preview) {
 	this.exportMedia(this.sounds, this.webNS+"/"+this.soundsPath, this.exportSounds, "EJS_E_SNDPATH");
 
 	this.writeDartLib();
-	if (!FLfile.exists(this.dartMainPath)) this.writeDartMain();
+	if (!this.fileChangeManager.checkFile(this.dartMainPath)) 
+		this.writeDartMain();
 
 	if (this.enableMouseOver && this.bitmaps.length) { Log.warning("EJS_W_BITMAPBTN"); }
 
@@ -607,13 +608,13 @@ p.writeDartMain = function() {
 		+'import \'package:stagexl/stagexl.dart\';\n'
 		+'import \'$DOCNAMELib.dart\' as lib;\n'
 		+'\n'
-		+'class $DOCNAME\n'
+		+'class $DOCSYMBOL\n'
 		+'{\n'
 		+'  Stage stage;\n'
 		+'  RenderLoop renderLoop;\n'
 		+'  $LIB.$DOCSYMBOL exportRoot;\n'
 		+'\n'
-		+'  $DOCNAME() {\n'
+		+'  $DOCSYMBOL() {\n'
 		+'    stage = new Stage("$STAGE", html.document.query("#$STAGE"), '+this.doc.width+', '+this.doc.height+', '+this.fps+');\n'
 		+'\n'
 		+'    renderLoop = new RenderLoop();\n'
@@ -654,7 +655,7 @@ p.writeDartIndex = function() {
 	str = 'import \'../lib/$DOCNAME.dart\';\n'
 		+ '\n'
 		+ 'void main() {\n'
-	  	+ '  new BannerV5();\n'
+	  	+ '  new '+this.docSymbolName+'();\n'
 		+ '}\n';
 
 	str = str.replace("$DOCNAME", this.docName, "g");

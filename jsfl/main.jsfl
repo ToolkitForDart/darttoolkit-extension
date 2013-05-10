@@ -104,16 +104,16 @@ function browseForOutputPath() {
 function getDisplayPath(path) {
 	getDocument();
 
-	if (path.charAt(0) != ".") { return FLfile.uriToPlatformPath(path); }
+	if (path.charAt(0) != ".") return convertUriPath(path); 
 	
 	// relative path:
 	if (!doc || !doc.pathURI) { return path; } // this shouldn't happen.
 	
 	include("utils");
-	
+
 	path = resolveRelativePath(doc.pathURI, path);
 	docPath = FLfile.uriToPlatformPath(doc.pathURI);
-	path = FLfile.uriToPlatformPath(path);
+	path = convertUriPath(path);
 	
 	var slash = MAC ? "/" : "\\";
 	
@@ -129,6 +129,12 @@ function getDisplayPath(path) {
 	return path; 
 }
 
+function convertUriPath(path) {
+	if (path != null && path.indexOf("file://") == 0)
+		return FLfile.uriToPlatformPath(path);
+	return path;
+}
+
 function getLocaleURI() {
 	include("Locale");
 	return Locale.getLocaleURI(LOCALE_PATH);
@@ -141,7 +147,7 @@ function openOutputPath() {
 	if (!FLfile.exists(props.outputPath)) {
 		include("Locale");
 		Locale.load(Locale.getLocaleURI(LOCALE_PATH));
-		alert(Locale.get("EJS_UI_OUTPUTPATH", getDisplayPath(props.outputPath)));
+		alert(Locale.get("EJS_UI_OUTPUTPATH", props.outputPath));
 		return false;
 	}
 	openDirectory(props.outputPath);
@@ -167,7 +173,6 @@ function getDefaultSettings() {
 		Locale.load(Locale.getLocaleURI(LOCALE_PATH));
 		alert(Locale.get("EJS_UI_DEFAULT_SETTINGS_ERR",getDisplayPath(DEFAULT_SETTINGS_PATH)));
 	}
-	fl.trace("getDefaultSettings " + str);
 	return str;
 }
 
@@ -202,7 +207,7 @@ function runExport() {
 	fl.logPIPEvent(PIP_NAME, "Publish"+(props.preview?" and Preview":""));
 
 	if (!FLfile.exists(props.outputPath)) {
-		alert(Locale.get("EJS_UI_OUTPUTPATH", getDisplayPath(props.outputPath)));
+		alert(Locale.get("EJS_UI_OUTPUTPATH", props.outputPath));
 		return false;
 	}
 	// timeline options
@@ -235,6 +240,8 @@ function cleanupProps(props) {
 	}
 	
 	props.outputPath = resolveRelativePath(doc.pathURI, props.outputPath || "./");
+	if (props.outputPath != null && props.outputPath.substr(0,5) != "file:")
+		props.outputPath = FLfile.platformPathToURI(props.outputPath);
 	
 	return props;
 }
@@ -302,6 +309,7 @@ function getOutputPath(path) {
 		// already relative path:
 		return path;
 	}
+	else path = convertUriPath(path);
 	
 	getDocument();
 	if (path.charAt(path.length-1) != "/") { path += "/"; }

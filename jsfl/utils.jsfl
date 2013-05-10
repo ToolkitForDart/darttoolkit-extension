@@ -32,7 +32,7 @@ resolveRelativePath = function(target,path) {
 	}
 	var dir = target.substring(0,target.lastIndexOf("/"));
 	if (path.charAt(0) == "/") {
-		return dir+path;
+		return path;
 	}
 	
 	while (path.charAt(0) == ".") {
