@@ -214,8 +214,8 @@ p.run = function(preview) {
 	this.dartLibFilePath = this.libPath+this.docName+"Lib.dart";
 
 	var conflicts = [];
-	if (this.exportHTML && this.fileChangeManager.checkFile(this.htmlFilePath)) conflicts.push("HTML");
-	if (this.exportHTML && this.fileChangeManager.checkFile(this.dartFilePath)) conflicts.push("INDEX");
+	//if (this.exportHTML && this.fileChangeManager.checkFile(this.htmlFilePath)) conflicts.push("HTML");
+	//if (this.exportHTML && this.fileChangeManager.checkFile(this.dartFilePath)) conflicts.push("INDEX");
 	if (this.fileChangeManager.checkFile(this.dartLibFilePath)) conflicts.push("LIB");
 	if (conflicts.length && !confirm(Locale.get("EJS_UI_"+conflicts.join("")+"MOD"))) { return; }
 	
@@ -259,8 +259,10 @@ p.run = function(preview) {
 	if (this.enableMouseOver && this.bitmaps.length) { Log.warning("EJS_W_BITMAPBTN"); }
 
 	if (this.exportHTML) { 
-		this.writeDartIndex();
-		this.writeHTML(); 
+		if (!this.fileChangeManager.checkFile(this.dartFilePath))
+			this.writeDartIndex();
+		if (!this.fileChangeManager.checkFile(this.htmlFilePath))
+			this.writeHTML(); 
 	}
 	
 	this.readErrors();
