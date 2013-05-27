@@ -63,10 +63,10 @@ p.toString = function(t,scope) {
 	str += ')';
 	str += exportTransform(e, name, "\n"+t, offset, true);
 	str += exportFilters(e.filters.*, name, "\n"+t);
-	str += ';'
 	
 	//if (e.@autoExpand != "true")
-	str += "\n"+t+name+".width = "+(width+size/4)+";";
+	str += "\n"+t+"..width = "+(width+size/4);
+	str += ';'
 	
 	return str;
 }
@@ -78,7 +78,7 @@ p.getText = function(e) {
 	for (var i=0; i<l; i++) {
 		str += textruns[i].characters+"";
 	}
-	return str.split("\"").join("\\\"").split("\r").join("\\n");
+	return str.split("\"").join("\\\"").split("\r").join("\\n").split("$").join("\\$");
 }
 
 p.getStyle = function(attrs) {

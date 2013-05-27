@@ -83,7 +83,7 @@
 	<s key="EJS_W_BUTTON">Buttons are published as MovieClip symbols without interactivity.</s>
 	<s key="EJS_W_SHADOW">Shadow and glow filters are very expensive effects, and not all options are supported.</s>
 	<s key="EJS_W_TEXTFIELD">Input and static text fields are published as dynamic text fields.</s>
-	<s key="EJS_W_TEXT">Text support is limited. It is generally recommended to include text as HTML elements (see DOMElement).</s>
+	<s key="EJS_W_TEXT">Text support is limited. It is generally recommended to include text as HTML elements.</s>
 	<s key="EJS_W_BMPFILL">Bitmap fills will not be transformed in the output, and may render differently.</s>
 	<s key="EJS_W_RADGRAD">Only circular (not oval) radial gradients are supported.</s>
 	<s key="EJS_W_FRAMENUMS">Frame numbers in Dart StageXL start at 0 instead of 1. For example, this affects gotoAndStop and gotoAndPlay calls.</s>
