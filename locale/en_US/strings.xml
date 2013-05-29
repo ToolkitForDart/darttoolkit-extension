@@ -31,6 +31,9 @@
 	<s key="EJS_UI_TITLE_OPTIONS">Options</s>
 	<s key="EJS_UI_LABEL_HIDDEN_LAYERS">Include hidden layers</s>
 	<s key="EJS_UI_LABEL_COMPACT_PATHS">Compact shapes</s>
+	<s key="EJS_UI_LABEL_AUTO_ATLAS">Generate image atlas from PNGs</s>
+	<s key="EJS_UI_LABEL_MAX_PNG_SIZE">Maximum PNG size:</s>
+	<s key="EJS_UI_LABEL_MAX_ATLAS_SIZE">Maximum atlas size:</s>
 	
 	<s key="EJS_UI_TITLE_TIMELINE_SETTINGS">Timeline Settings</s>
 	<s key="EJS_UI_LABEL_LOOP">Loop</s>

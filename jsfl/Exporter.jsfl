@@ -44,25 +44,19 @@ include("TextInst");
 include("ShapeInst");
 
 include("BoundsHelper");
+include("SpriteSheetHelper");
 
 
 /************************************************************************
 GLOBAL VARS
 ************************************************************************/
-//var EASELJS_FILES = ["easeljs-0.6.0.min.js"];
-//var TWEENJS_FILES = ["tweenjs-0.4.0.min.js","movieclip-0.6.0.min.js"];
-//var SOUNDJS_FILES = ["soundjs-0.4.0.min.js"];
-//var PRELOADJS_FILES = ["preloadjs-0.3.0.min.js"];
 var CANVAS_ID = "canvas";
 //var USE_TICKS_STRING = ",{useTicks:true}";
 var CACHE_PAD = 2; // defines padding amount for bitmap cache bounds
 var SYMBOL_PATH = "LIBRARY/";
-//var CREATEJS_DEFAULT_NS = "createjs";
 
-var CREATEJS_VAR = "cjs";
 var IMAGES_VAR = "img";
 var LIB_VAR = "lib";
-var CREATEJS_VAR_ = CREATEJS_VAR+".";
 var IMAGES_VAR_ = IMAGES_VAR+".";
 var LIB_VAR_ = LIB_VAR+".";
 
@@ -106,20 +100,19 @@ Exporter = function(doc, props) {
 	this.outputPath = props.outputPath;
 	this.imagesPath = props.imagesPath;
 	this.soundsPath = props.soundsPath;
-	//this.libraryPath = props.libraryPath;
 	this.exportImages = props.exportImages;
 	this.exportSounds = props.exportSounds;
-	//this.exportLibs = props.exportLibs;
 	this.exportHTML = props.exportHTML;
 	this.includeHiddenLayers = props.includeHiddenLayers;
 	this.compactPaths = props.compactPaths;
-	//this.hostedLibs = props.hostedLibs && HOSTED_LIBS_ENABLED;
 	this.frameBounds = props.frameBounds;
 	this.webNS = props.webNS;
 	this.libNS = props.libNS;
 	this.imagesNS = props.imagesNS;
-	//this.createjsNS = props.createjsNS;
 	this.loopTimeline = props.loop;
+	this.atlas_enabled = props.autoAtlas;
+	this.atlas_maxPng = props.maxPng;
+	this.atlas_maxSize = props.maxAtlas;
 
 	/*for(var p in props)
 		fl.trace(p +"=" + props[p]);
@@ -166,6 +159,9 @@ p.webNS;
 p.libNS;
 p.imagesNS;
 p.loopTimeline;
+p.atlas_enabled;
+p.atlas_maxSize;
+p.atlas_maxSize;
 
 // working data:
 p.docName;
@@ -249,6 +245,9 @@ p.run = function(preview) {
 	this.readStage();
 	this.writePubSpec();
 	
+	if (this.atlas_enabled)
+		this.optimizeMedias();
+
 	this.exportMedia(this.bitmaps, this.webNS+"/"+this.imagesPath, this.exportImages, "EJS_E_IMGPATH");
 	this.exportMedia(this.sounds, this.webNS+"/"+this.soundsPath, this.exportSounds, "EJS_E_SNDPATH");
 
@@ -275,6 +274,12 @@ p.run = function(preview) {
 	
 	Log.time(); // "run export"
 	return preview; //&&this.preview();
+}
+
+p.optimizeMedias = function() {
+	var ssh = new SpriteSheetHelper("_atlas_");
+	if (ssh.optimize(this.doc, this.bitmaps, this.webPath + this.imagesPath, this.atlas_maxSize, this.atlas_maxPng))
+		this.spritesheets = ssh; 
 }
 
 p.validateSettings = function() {
@@ -553,18 +558,29 @@ p.writeDartLib = function() {
 	// set up the manifest for sounds and images:
 	if (this.bitmaps.length || this.sounds.length)
 	{
+		var i;
+
 		//var defIDs = '';
 		var resList = '';
+		if (this.spritesheets) {
+			for(i=0; i<this.spritesheets.sheets.length; i++) {
+				var sheet = this.spritesheets.sheets[i];
+				if (resList.length) resList += '\n';
+				resList += '  ..addTextureAtlas("' + sheet +'", "${basePath}'+this.imagesPath+sheet+'.json", "json")';
+			}
+		}
+
 		for (i=0; i<this.bitmaps.length; i++) {
-			if (resList.length) resList += '\n';
 			var image = this.bitmaps[i];
+			if (image.frame) continue;
+			if (resList.length) resList += '\n';
 			var IID = image.name;//.toUpperCase();
 			//defIDs += 'const String '+IID+' = "'+image.name+'";\n';
 			resList += '  ..addBitmapData("'+IID+'", "${basePath}'+this.imagesPath+extractFileName(image.src,true)+'")';
 		}
 		for (i=0; i<this.sounds.length; i++) {
-			if (resList.length) resList += '\n';
 			var sound = this.sounds[i];
+			if (resList.length) resList += '\n';
 			var SID = sound.name;//.toUpperCase();
 			//defIDs += 'const String '+SID+' = "'+sound.name+'";\n';
 			resList += '  ..addSound("'+SID+'", "${basePath}'+this.soundsPath+extractFileName(sound.src,true)+'")';

@@ -29,21 +29,34 @@ var p = BitmapSymbol.prototype;
 p.xml;
 p.name;
 p.src;
+p.frame;
 
 p.toString = function(t) {
-	var str = 
-		 t+'class '+this.name+' extends Bitmap {\n'
-		+t+'  '+this.name+'():super(resources.getBitmapData("'+this.name+'")) { }\n'
-		+t+'}\n';
+	if (!this.frame)
+		var str = 
+			 t+'class '+this.name+' extends Bitmap {\n'
+			+t+'  static BitmapData bmp;\n'
+			+t+'  '+this.name+'():super(bmp) {\n'
+			+t+'    if (bitmapData == null) bitmapData = bmp = resources.getBitmapData("'+this.name+'");\n'
+			+t+'  }\n'
+			+t+'}\n';
+	else
+		var str =
+			 t+'class '+this.name+' extends Bitmap {\n'
+			+t+'  static BitmapData bmp;\n'
+			+t+'  '+this.name+'():super(bmp) {\n'
+			+t+'    if (bitmapData == null) bitmapData = bmp = resources.getTextureAtlas("'+Exporter.instance.spritesheet
+				+'").getBitmapData("'+this.frame.name+'");\n'
+			+t+'  }\n'
+			+t+'}\n';
 	return str;
 }
 
 p.exportFile = function(sourcePath, destPath, exportPath) {
+	if (this.frame) return;
 	var source = this.xml.@href;
 	var filename = source.split("/").pop();
-	//var suffix = source.substr(source.lastIndexOf(".")).toLowerCase();
 
-	// NOTE: fixAssetName should be removed in future versions:
 	this.src = destPath + filename;
 	if (exportPath && !copyFile(sourcePath+source, exportPath + filename, true)) {
 		Log.error("EJS_E_IMGEXP",this.src);
