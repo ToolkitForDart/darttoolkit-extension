@@ -24,9 +24,8 @@
 /************************************************************************
 VERSIONS
 ************************************************************************/
-var VERSION = "0.3.1";
+var VERSION = "0.3.6";
 var DEBUG = false;
-//var HOSTED_LIBS_ENABLED = true;
 
 /************************************************************************
 GLOBAL METHODS
@@ -236,7 +235,7 @@ function cleanupProps(props) {
 	getDocument();
 
 	var booleanProps = { exportImages:1, exportSounds:1, exportLibs:1, exportTweens:1, exportHTML:1, 
-		preview:1, compactPaths:1, includeHiddenLayers:1, autoAlpha:1}
+		preview:1, compactPaths:1, includeHiddenLayers:1, autoAtlas:1 };
 	var numericProps = { maxPng:1, maxAtlas:1 };
 	for (var n in props) {
 		if (n in booleanProps) { props[n] = (props[n] == "true" || props[n] == "1"); }

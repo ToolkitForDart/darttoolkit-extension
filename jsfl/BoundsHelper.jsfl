@@ -105,7 +105,7 @@ p.getSymbolBounds = function(symbolOrName, multiframe, checkHiddenLayers, offset
 			if (!fwd && i != 1) { bounds[i-1] = "rect="+bounds[i-1]; }
 			fwd = true;
 		} else {
-			bounds[i] = "new "+CREATEJS_VAR_+"Rectangle("+[x1,y1,w1,h1].join(",")+")";
+			bounds[i] = "new Rectangle("+[x1,y1,w1,h1].join(",")+")";
 			fwd = false;
 		}
 		x = x1;
@@ -161,7 +161,7 @@ p._getFirstFrameBounds = function(timeline) {
 		}
 	}
 	var params = rect ? [fix(rect.x),fix(rect.y),fix(rect.width),fix(rect.height)] : [0,0,0,0];
-	var bounds = ["new "+CREATEJS_VAR_+"Rectangle("+params.join(",")+")"];
+	var bounds = ["new Rectangle("+params.join(",")+")"];
 	return {bounds:bounds, rect:rect};
 }
 

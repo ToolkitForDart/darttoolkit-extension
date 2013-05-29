@@ -278,7 +278,10 @@ p.run = function(preview) {
 
 p.optimizeMedias = function() {
 	var ssh = new SpriteSheetHelper("_atlas_");
-	if (ssh.optimize(this.doc, this.bitmaps, this.webPath + this.imagesPath, this.atlas_maxSize, this.atlas_maxPng))
+
+	var imgPath = this.getDirPath(this.webNS+"/"+this.imagesPath, "EJS_E_IMGPATH", this.bitmaps.length > 0);
+
+	if (ssh.optimize(this.doc, this.bitmaps, imgPath, this.atlas_maxSize, this.atlas_maxPng))
 		this.spritesheets = ssh; 
 }
 

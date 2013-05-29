@@ -45,7 +45,7 @@ p.toString = function(t) {
 			 t+'class '+this.name+' extends Bitmap {\n'
 			+t+'  static BitmapData bmp;\n'
 			+t+'  '+this.name+'():super(bmp) {\n'
-			+t+'    if (bitmapData == null) bitmapData = bmp = resources.getTextureAtlas("'+Exporter.instance.spritesheet
+			+t+'    if (bitmapData == null) bitmapData = bmp = resources.getTextureAtlas("'+this.frame.atlas
 				+'").getBitmapData("'+this.frame.name+'");\n'
 			+t+'  }\n'
 			+t+'}\n';
