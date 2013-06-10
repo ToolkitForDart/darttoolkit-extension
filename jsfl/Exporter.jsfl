@@ -51,7 +51,6 @@ include("SpriteSheetHelper");
 GLOBAL VARS
 ************************************************************************/
 var CANVAS_ID = "canvas";
-//var USE_TICKS_STRING = ",{useTicks:true}";
 var CACHE_PAD = 2; // defines padding amount for bitmap cache bounds
 var SYMBOL_PATH = "LIBRARY/";
 
