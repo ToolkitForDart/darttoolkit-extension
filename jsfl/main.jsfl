@@ -24,7 +24,7 @@
 /************************************************************************
 VERSIONS
 ************************************************************************/
-var VERSION = "0.3.6";
+var VERSION = "0.4.0";
 var DEBUG = false;
 
 /************************************************************************
@@ -86,7 +86,7 @@ var CHANGE_LOG_PATH = BASE_PATH+"changeLog.dat";
 var DEFAULT_SETTINGS_PATH = BASE_PATH+"defaultSettings.dat";
 var DOC_DATA_NAME = "DartToolkit_data";
 var TIMELINE_DATA_NAME = "DartToolkit_timelinedata";
-var PIP_NAME = "DartExtension1.2";
+var PIP_NAME = "DartExtension0.4";
 var MAIN_XML_PATH = "DOMDocument.xml";
 
 /************************************************************************

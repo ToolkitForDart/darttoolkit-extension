@@ -1,6 +1,6 @@
 ﻿<macromedia-extension
 	 name="Toolkit for Dart for Adobe Flash Professional"
-	 version="0.3.6"
+	 version="0.4.0"
 	 id="Toolkit_for_Dart_for_Adobe_Flash_Professional"
 	 type="flashpanel"
 	 force-quit="true"
@@ -35,8 +35,8 @@
 	</license-agreement>
 
 	<files>
-		<file source="Toolkit_for_Dart_for_Adobe_Flash_Professional.mxi_Resources/en_US.xml" destination="$shareddatafolder/Toolkit_for_Dart_for_Adobe_Flash_Professional.mxi_Resources" shared="true" isresourcefile="true" file-type="ordinary" folder="Toolkit_for_Dart_for_Adobe_Flash_Professional.mxi_Resources" />
-		<file source="Toolkit_for_Dart_for_Adobe_Flash_Professional.mxi_Resources/fr_FR.xml" destination="$shareddatafolder/Toolkit_for_Dart_for_Adobe_Flash_Professional.mxi_Resources" shared="true" isresourcefile="true" file-type="ordinary" folder="Toolkit_for_Dart_for_Adobe_Flash_Professional.mxi_Resources" />
+		<file source="Toolkit_for_Dart.mxi_Resources/en_US.xml" destination="$shareddatafolder/Toolkit_for_Dart.mxi_Resources" shared="true" isresourcefile="true" file-type="ordinary" folder="Toolkit_for_Dart.mxi_Resources" />
+		<file source="Toolkit_for_Dart.mxi_Resources/fr_FR.xml" destination="$shareddatafolder/Toolkit_for_Dart.mxi_Resources" shared="true" isresourcefile="true" file-type="ordinary" folder="Toolkit_for_Dart.mxi_Resources" />
 		<file source="locale/en_US/strings.xml" destination="$Flash/DartJS/locale/en_US" file-type="ordinary" folder="locale" />
 		<file source="defaultSettings.dat" destination="$Flash/DartJS/" file-type="ordinary" />
 		<file source="ui/Toolkit for Dart.swf" destination="$Flash/WindowSWF/" file-type="ordinary" />
