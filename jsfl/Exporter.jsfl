@@ -112,12 +112,6 @@ Exporter = function(doc, props) {
 	this.atlas_enabled = props.autoAtlas;
 	this.atlas_maxPng = props.maxPng;
 	this.atlas_maxSize = props.maxAtlas;
-
-	/*for(var p in props)
-		fl.trace(p +"=" + props[p]);
-	return;*/
-
-	//if (this.hostedLibs) { this.libraryPath = HOSTED_LIB_PATH; }
 	
 	this.docName = extractFileName(doc.name, false);
 	this.docSymbolName = getVarName(doc.docClass||this.docName, "__DART_LIB", "Symbol");
@@ -125,7 +119,6 @@ Exporter = function(doc, props) {
 	this.sounds = [];
 	this.symbols = [];
 	this.symbolMap = {};
-	//this.dartFiles = EASELJS_FILES;
 
 	this.fileChangeManager = new FileChangeManager(CHANGE_LOG_PATH);
 }
@@ -518,9 +511,7 @@ p.writePubSpec = function() {
 		+'description: '+this.docName+'\n'
 		+'dependencies:\n'
 		+'  browser: any\n'
-		//+'  stagexl: any\n'
-		+'  stagexl:\n'
-		+'    git: https://github.com/bp74/StageXL.git\n'
+		+'  stagexl: any\n'
 		+'  meta: any\n';
 
 	if (!FLfile.exists(this.pubspecFilePath))
