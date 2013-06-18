@@ -1,0 +1,120 @@
+<!-- %DETAILS% will be replaced with contextual details, for example a file path or variable name. -->
+
+<locale language="en">
+	<!-- PANEL UI -->
+	<s key="EJS_UI_HELPURL">http://stagexl.org</s><!-- don't forget EJS_UI_INSTALLPANEL if urls change -->
+	<s key="EJS_UI_EMBEDFONT">true</s>
+	
+	<s key="EJS_UI_NOFLA">You must have an FLA open to publish.</s>
+	<s key="EJS_UI_OUTPUTPATH">The output directory could not be found. Please update it and try again. [%DETAILS%]</s>
+	<s key="EJS_UI_DEFAULT_SETTINGS_ERR">The default settings file is missing or damaged. Reinstall the panel and try again. [%DETAILS%]</s>
+	<s key="EJS_UI_NO_OUTPUTPATH">Save the FLA or specify an output path.</s>
+	<s key="EJS_UI_SAVETO">Save output to...</s>
+	
+	<s key="EJS_UI_BUTTON_EXPORT">Publish</s>
+	<s key="EJS_UI_BUTTON_WAIT">Wait</s>
+	<s key="EJS_UI_LABEL_PREVIEW">Preview</s>
+	
+	<s key="EJS_UI_TITLE_EXPORT_SETTINGS">Publish settings</s>
+	<s key="EJS_UI_LABEL_OUTPUT">Output:</s>
+	<s key="EJS_UI_LABEL_EDIT_SETTINGS">Edit Settings...</s>
+	
+	<s key="EJS_UI_LABEL_EXPORT_HTML">Publish HTML and Dart index</s>
+	<s key="EJS_UI_TITLE_ASSETS">Asset Paths</s>
+	<s key="EJS_UI_LABEL_IMAGES">Images:</s>
+	<s key="EJS_UI_LABEL_SOUNDS">Sounds:</s>
+	<s key="EJS_UI_LABEL_LIBS">Dart:</s>
+	<s key="EJS_UI_TITLE_NAMESPACES">Namespaces</s>
+	<s key="EJS_UI_LABEL_WEB">Index:</s>
+	<s key="EJS_UI_LABEL_LIB">Symbols:</s>
+	<s key="EJS_UI_LABEL_CREATEJS">Dart:</s>
+	<s key="EJS_UI_TITLE_OPTIONS">Options</s>
+	<s key="EJS_UI_LABEL_HIDDEN_LAYERS">Include hidden layers</s>
+	<s key="EJS_UI_LABEL_COMPACT_PATHS">Compact shapes</s>
+	<s key="EJS_UI_LABEL_AUTO_ATLAS">Generate image atlas from PNGs</s>
+	<s key="EJS_UI_LABEL_MAX_PNG_SIZE">Maximum PNG size:</s>
+	<s key="EJS_UI_LABEL_MAX_ATLAS_SIZE">Maximum atlas size:</s>
+	
+	<s key="EJS_UI_TITLE_TIMELINE_SETTINGS">Timeline Settings</s>
+	<s key="EJS_UI_LABEL_LOOP">Loop</s>
+	<s key="EJS_UI_LABEL_EXPORT_AS_IMAGE">Export as image</s>
+	
+	<s key="EJS_UI_HTMLMOD">The HTML file has been modified since the last publish. Overwrite?</s>
+	<s key="EJS_UI_INDEXMOD">The Dart index file has been modified since the last publish. Overwrite?</s>
+	<s key="EJS_UI_LIBMOD">The Dart library file has been modified since the last publish. Overwrite?</s>
+	<s key="EJS_UI_INDEXLIBMOD">The Dart index and Dart library files have been modified since the last publish. Overwrite?</s>
+	<s key="EJS_UI_HTMLINDEXMOD">The HTML and Dart index files have been modified since the last publish. Overwrite?</s>
+	<s key="EJS_UI_HTMLINDEXLIBMOD">The HTML, Dart index, and Dart library files have been modified since the last publish. Overwrite?</s>
+	<s key="EJS_UI_HTMLMISSING">The HTML file could not be found for preview. Enable "Publish HTML", or disable "Preview". [%DETAILS%]</s>
+	
+	<s key="EJS_UI_OPENPANEL">%DETAILS% panel must be open to publish.</s>
+	<s key="EJS_UI_INSTALLPANEL">Please install the %DETAILS% panel. Visit http://stagexl.org for more information</s>
+	<s key="EJS_UI_PUBLISHCMD">Publish for Dart</s>
+	
+	<!-- WARNINGS -->
+	<s key="EJS_WARNINGS">WARNINGS:</s>
+	<s key="EJS_W_F">Feature not supported: </s><!-- Concatenated with the below -->
+	
+	<s key="EJS_W_F_FILTERS">Filters other than shadow and glow.</s>
+	<s key="EJS_W_F_COLORFX">Color effects.</s>
+	<s key="EJS_W_F_MOTIONGUIDE">Motion guides.</s><!-- UNUSED IN v1.1 -->
+	<s key="EJS_W_F_CUSTOMEASE">Custom eases.</s>
+	<s key="EJS_W_F_INDIVIDUALPROP">Individual property tweens.</s>
+	<s key="EJS_W_F_BLENDMODES">Blend modes except normal and add.</s>
+	<s key="EJS_W_F_SOUNDSTOP">Sync modes other than "event" for sounds.</s>
+	<s key="EJS_W_F_SOUNDREPEAT">Sound repeat count other than 1 or loop.</s><!-- UNUSED IN v1.1 -->
+	<s key="EJS_W_F_SOUNDFX">Sound effects.</s>
+	<s key="EJS_W_F_MASK">Masks.</s><!-- UNUSED IN v1.1 -->
+	<s key="EJS_W_F_SCALE9">Scale 9.</s>
+	<s key="EJS_W_F_SCENE">Multiple scenes.</s>
+	<s key="EJS_W_F_STROKESTYLE">Stroke styles except solid.</s>
+	<s key="EJS_W_F_VIDEO">Video.</s>
+	<s key="EJS_W_F_EMBEDFONT">Embedded fonts.</s>
+	<s key="EJS_W_F_COMPILED">Compiled clips.</s>
+	<s key="EJS_W_F_COMPONENT">Components.</s>
+	<s key="EJS_W_F_SCREEN">Forms and screens.</s>
+	<s key="EJS_W_F_3D">3D transformation.</s>
+	<s key="EJS_W_F_IK">Inverse kinematics.</s>
+	<s key="EJS_W_F_TLF">TLF text. Use classic text instead.</s><!-- UNUSED IN v1.1 -->
+	<s key="EJS_W_F_MOTIONTWEEN">Motion tweens. Use classic tweens instead.</s><!-- UNUSED IN v1.1 -->
+	<s key="EJS_W_F_EXPORTASBMP">Export as bitmap.</s>
+	<s key="EJS_W_F_STROKESCALE">Stroke scale modes except normal or none.</s> <!-- NEW v1.2 -->
+	<s key="EJS_W_F_OPAQUECACHE">Cache as Bitmap with opaque background.</s> <!-- NEW v1.2* -->
+	<s key="EJS_W_F_MASKSYMBOL">Multiframe symbols in masks.</s><!-- NEW v1.2* -->
+	
+	<s key="EJS_W_TRANSFORMPOINT">Modifying the transform point in a tween can produce unexpected results.</s>
+	<s key="EJS_W_BUTTON">Buttons are published as MovieClip symbols without interactivity.</s>
+	<s key="EJS_W_SHADOW">Shadow and glow filters are very expensive effects, and not all options are supported.</s>
+	<s key="EJS_W_TEXTFIELD">Input and static text fields are published as dynamic text fields.</s>
+	<s key="EJS_W_TEXT">Text support is limited. It is generally recommended to include text as HTML elements.</s>
+	<s key="EJS_W_BMPFILL">Bitmap fills will not be transformed in the output, and may render differently.</s>
+	<s key="EJS_W_RADGRAD">Only circular (not oval) radial gradients are supported.</s>
+	<s key="EJS_W_FRAMENUMS">Frame numbers in Dart StageXL start at 0 instead of 1. For example, this affects gotoAndStop and gotoAndPlay calls.</s>
+	<s key="EJS_W_ANIMCACHE">Applying "cache as bitmap" to an animated instance could have unexpected results.</s>
+	<s key="EJS_W_LARGESHAPE">A shape has exceeded the maximum allowable pixel dimensions. It may display improperly.</s>
+	<s key="EJS_W_ROTATION_NONE">Tween rotate mode "none" is not supported.</s>
+	<s key="EJS_E_EMPTYSYMBOL">Empty symbol. [%DETAILS%]</s> <!-- this is now a warning, despite it's coding -->
+	<s key="EJS_W_BITMAPBTN">Content with both Bitmaps and Buttons may generate local security errors in some browsers if run from the local file system.</s>
+	<s key="EJS_W_ORIENTTOPATH">Orient to path support is limited.</s>
+	
+	
+	<!-- TIMELINE MESSAGES -->
+	<s key="EJS_W_TWEENERROR">Layers with classic tweens must contain only a single symbol instance.</s>
+	<s key="EJS_W_SHAPETWEEN">Shape tweens are not supported.</s><!-- UNUSED IN v1.1 -->
+	<s key="EJS_W_MOTIONTWEEN">Motion tweens are published as frame by frame animations. Use classic tweens where possible.</s>
+
+	
+	
+	<!-- ERRORS -->
+	<s key="EJS_ERRORS">ERRORS:</s>
+	<s key="EJS_E_IMGPATH">Image export path could not be resolved.</s>
+	<s key="EJS_E_SNDPATH">Sound export path could not be resolved.</s>
+	<s key="EJS_E_JSPATH">JS library export path could not be resolved.</s>
+	<s key="EJS_E_LIBMISSING">JS library not found. [%DETAILS%]</s>
+	<s key="EJS_E_IMGEXP">Error exporting image. The file may be in use by another application. [%DETAILS%]</s>
+	<s key="EJS_E_SNDEXP">Error exporting sound. The file may be in use by another application. Check that the preview HTML is not open in your browser. [%DETAILS%]</s>
+	<s key="EJS_E_SCOPECONFLICT">Scope name conflicts with existing variable name. [%DETAILS%]</s>
+	<s key="EJS_E_JSXEXPORT">An unexpected error occurred during export. [%DETAILS%]</s>
+	<s key="EJS_E_FLCREATEJS">A supporting library was not loaded correctly. Exit Extension Manager if it is open and restart Flash Pro.</s><!-- NEW v1.2 -->
+
+</locale>
