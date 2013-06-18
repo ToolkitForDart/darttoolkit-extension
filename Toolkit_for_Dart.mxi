@@ -38,6 +38,7 @@
 		<file source="Toolkit_for_Dart.mxi_Resources/en_US.xml" destination="$shareddatafolder/Toolkit_for_Dart.mxi_Resources" shared="true" isresourcefile="true" file-type="ordinary" folder="Toolkit_for_Dart.mxi_Resources" />
 		<file source="Toolkit_for_Dart.mxi_Resources/fr_FR.xml" destination="$shareddatafolder/Toolkit_for_Dart.mxi_Resources" shared="true" isresourcefile="true" file-type="ordinary" folder="Toolkit_for_Dart.mxi_Resources" />
 		<file source="locale/en_US/strings.xml" destination="$Flash/DartJS/locale/en_US" file-type="ordinary" folder="locale" />
+		<file source="locale/ja_JP/strings.xml" destination="$Flash/DartJS/locale/ja_JP" file-type="ordinary" folder="locale" />
 		<file source="defaultSettings.dat" destination="$Flash/DartJS/" file-type="ordinary" />
 		<file source="ui/Toolkit for Dart.swf" destination="$Flash/WindowSWF/" file-type="ordinary" />
 		<file source="ui/settingsDialog.swf" destination="$Flash/DartJS/ui" file-type="ordinary" />
