@@ -105,9 +105,10 @@ p.createExporter = function() {
 
 p.publish = function(exp, out) {
 	var options = { format:"png", bitDepth:32, backgroundColor:"#00000000" };
-	var raw = exp.exportSpriteSheet(out, options, true);
+	var raw = exp.exportSpriteSheet(out, options);
 
 	if (FLfile.exists(out + ".png") && raw && raw.length) {
+		FLfile.write(out + ".json", raw);
 		var name = out.split("/").pop();
 		this.sheets.push(name);
 		return { raw:raw, sheet:name };
