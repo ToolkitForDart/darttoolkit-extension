@@ -110,8 +110,8 @@ Exporter = function(doc, props) {
 	this.imagesNS = props.imagesNS;
 	this.loopTimeline = props.loop;
 	this.atlas_enabled = props.autoAtlas;
-	this.atlas_maxPng = props.maxPng;
-	this.atlas_maxSize = props.maxAtlas;
+	this.atlas_maxPng = props.maxPngSize || 1024;
+	this.atlas_maxSize = props.maxAtlasSize || 2048;
 	
 	this.docName = extractFileName(doc.name, false);
 	this.docSymbolName = getVarName(doc.docClass||this.docName, "__DART_LIB", "Symbol");
