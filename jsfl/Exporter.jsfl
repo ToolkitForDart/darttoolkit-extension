@@ -110,8 +110,8 @@ Exporter = function(doc, props) {
 	this.imagesNS = props.imagesNS;
 	this.loopTimeline = props.loop;
 	this.atlas_enabled = props.autoAtlas;
-	this.atlas_maxPng = props.maxPngSize || 1024;
-	this.atlas_maxSize = props.maxAtlasSize || 2048;
+	this.atlas_maxPng = props.maxPng || 1024;
+	this.atlas_maxSize = props.maxAtlas || 2048;
 	
 	this.docName = extractFileName(doc.name, false);
 	this.docSymbolName = getVarName(doc.docClass||this.docName, "__DART_LIB", "Symbol");
@@ -152,7 +152,7 @@ p.libNS;
 p.imagesNS;
 p.loopTimeline;
 p.atlas_enabled;
-p.atlas_maxSize;
+p.atlas_maxPng;
 p.atlas_maxSize;
 
 // working data:
@@ -273,7 +273,7 @@ p.optimizeMedias = function() {
 
 	var imgPath = this.getDirPath(this.webNS+"/"+this.imagesPath, "EJS_E_IMGPATH", this.bitmaps.length > 0);
 
-	if (ssh.optimize(this.doc, this.bitmaps, imgPath, this.atlas_maxSize, this.atlas_maxPng))
+	if (ssh.optimize(this.doc, this.bitmaps, imgPath, this.atlas_maxPng, this.atlas_maxSize))
 		this.spritesheets = ssh; 
 }
 

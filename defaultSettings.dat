@@ -1,5 +1,5 @@
 version
-0.4.1
+0.4.2
 imagesPath
 images/
 imagesNS
@@ -28,7 +28,7 @@ preview
 true
 autoAtlas
 true
-maxPngSize
+maxPng
 1024
-maxAtlasSize
+maxAtlas
 2048
