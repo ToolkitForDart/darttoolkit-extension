@@ -100,6 +100,8 @@ p.createExporter = function() {
 	exp.sheetWidth = exp.sheetHeight = 128;
 	exp.autoSize = true;
 	exp.layoutFormat = "JSON";
+	exp.stackDuplicateFrames = false;
+	exp.algorithm = "maxRects";
 	return exp;
 }
 
@@ -123,7 +125,7 @@ p.filterMedias = function(symbols, medias, maxSize) {
 	for (i=0; i<medias.length; i++) {
 		var image = medias[i];
 		var filename = extractFileName(""+image.xml.@href, true);
-		if (filename.charAt(0) == "_") continue; // ignore image names starting with "_"
+		if (/^[_=!-]/.exec(filename)) continue; // ignore image names starting with special chars
 		if (filename.split(".").pop() != "png") continue; // only PNGs
 		if (reAtX.exec(filename)) continue; // @1x, @2x
 
