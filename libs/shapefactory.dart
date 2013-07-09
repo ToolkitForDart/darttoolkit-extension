@@ -118,9 +118,11 @@ class _ShapeFactory {
     };
     return this;
   }
-  _ShapeFactory bf(Bitmap image, String repeat, Matrix mat) {
+  _ShapeFactory bf(Bitmap image, [String repeat, Matrix mat]) {
     var bmp = image.bitmapData;
     GraphicsPattern pattern = null;
+    if (mat != null) mat.translate(-_shape.x, -_shape.y);
+    else mat = new Matrix(1, 0, 0, 1, -_shape.x, -_shape.y);
     switch (repeat) {
       case "repeat-x": pattern = new GraphicsPattern.repeatX(bmp, mat); break;
       case "repeat-y": pattern = new GraphicsPattern.repeatY(bmp, mat); break;

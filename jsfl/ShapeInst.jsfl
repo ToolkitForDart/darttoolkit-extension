@@ -132,10 +132,19 @@ p.getFill = function(paint,isStroke) {
 		var symbolName = Exporter.instance.getSymbol(paint.@bitmapPath[0]).name;
 		var str = "."+this.cmd["b"+c]+"(new "+symbolName+"()";
 		var mtx = paint.Matrix[0];
-		// TODO: not sure how to interpret the matrix from JSX, so disabled for now:
-		if (false && !isStroke && mtx) {
-			mtx = [fix(mtx.@a/20*1),fix(mtx.@b*1),fix(mtx.@c*1),fix(mtx.@d/20*1),fix(mtx.@tx*1),fix(mtx.@ty*1)];
-			str += ", null, new Matrix2D("+mtx.join(",")+")";
+		if (!isStroke && mtx) {
+			var a = mtx.@a*1;
+			var b = mtx.@b*1;
+			var c = mtx.@c*1;
+			var d = mtx.@d*1;
+			var tx = mtx.@tx*1;
+			var ty = mtx.@ty*1;
+			if (a == 1 && b == 0 && c == 0 && d == 1)
+				mtx = [1/20,0,0,1/20,fix(tx),fix(ty)];
+			else
+				mtx = [fix(a/20,3),fix(b/20,3),fix(c/20,3),fix(d/20,3),fix(tx),fix(ty)];
+			//mtx = [fix(mtx.@a/20*1),fix(mtx.@b*1),fix(mtx.@c*1),fix(mtx.@d/20*1),fix(mtx.@tx*1),fix(mtx.@ty*1)];
+			str += ", null, new Matrix("+mtx.join(",")+")";
 		}
 		return str+")";
 	}

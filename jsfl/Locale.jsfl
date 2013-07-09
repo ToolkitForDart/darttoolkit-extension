@@ -40,7 +40,17 @@ Locale.get = function(key, details) {
 	var str, node = Locale.xml.s.(@key==key);
 	if (node.length()) {
 		str = node[0].toString();
-		if (details) { str = str.split("%DETAILS%").join(details); }
+		if (details) { 
+			var parts = str.split("%DETAILS%");
+			if (details.pop) {
+				str = parts.shift();
+				for(var i=0; i<details.length; i++) {
+					str += details[i] + parts.shift();
+				}
+				str += parts.join("");
+			}
+			else str = parts.join(details); 
+		}
 	} else { str = key; }
 	return str;
 }

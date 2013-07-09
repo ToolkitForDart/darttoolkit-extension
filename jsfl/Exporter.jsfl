@@ -112,6 +112,12 @@ Exporter = function(doc, props) {
 	this.atlas_enabled = props.autoAtlas;
 	this.atlas_maxPng = props.maxPng || 1024;
 	this.atlas_maxSize = props.maxAtlas || 2048;
+	this.dartImports = [
+		'import \'dart:html\' as html;',
+		'import \'dart:async\';',
+		'import \'dart:math\';',
+		'import \'package:stagexl/stagexl.dart\';'
+	];
 	
 	this.docName = extractFileName(doc.name, false);
 	this.docSymbolName = getVarName(doc.docClass||this.docName, "__DART_LIB", "Symbol");
@@ -158,12 +164,12 @@ p.atlas_maxSize;
 // working data:
 p.docName;
 p.docSymbolName;
+p.dartImports;
 p.bitmaps;
 p.sounds;
 p.symbols;
 p.rootSymbol;
 p.symbolMap;
-p.dartFiles;
 p.fps;
 p.pubspecFilePath;
 p.dartFilePath;
@@ -400,12 +406,21 @@ p.readLibrary = function() {
 
 p.readBitmaps = function() {
 	var bitmaps = this.xml.DOMBitmapItem;
+	var excludedBitmaps = 0;
 	for (var i=0,l=bitmaps.length(); i<l; i++) {
 		var xml = bitmaps[i];
 		var symbol = new BitmapSymbol(xml);
-		this.addSymbol(xml.@name, xml.@linkageClassName, "Bitmap", symbol);
+		var sname = ""+xml.@name;
+		var name = sname.split("/").pop();
+		if (name.charAt(0) == '!') { // excluded
+			excludedBitmaps++;
+			continue;
+		}
+		this.addSymbol(sname, xml.@linkageClassName, "Bitmap", symbol);
 		this.bitmaps.push(symbol);
 	}
+	if (excludedBitmaps) 
+		Log.warning(excludedBitmaps + " image(s) omitted from export");
 }
 
 p.readSounds = function() {
@@ -458,7 +473,7 @@ p.exportMovieClip = function(xml) {
 }
 
 p.addSymbol = function(id, linkage, defaultName, symbol) {
-	if (this.symbolMap[id]) { Log.error("EJS_E_JSXEXPORT","DUPSYMB ("+id+")"); return; }
+	if (this.symbolMap[id]) { Log.error("EJS_E_JSXEXPORT","DUPSYMB ("+id+")"); return null; }
 	var name = String(linkage) || extractFileName(id, false, true);
 	symbol.name = getVarName(name, "__DART_LIB", defaultName);
 	
@@ -470,7 +485,10 @@ p.addSymbol = function(id, linkage, defaultName, symbol) {
 
 p.getSymbol = function(id) {
 	var symbol = this.symbolMap[id];
-	if (!symbol) { Log.error("EJS_E_JSXEXPORT","NOSYMB ("+id+")"); return; }
+	if (!symbol) { 
+		if (id.charAt(0) != '!') 
+			Log.error("EJS_E_JSXEXPORT","NOSYMB ("+id+")"); return null; 
+	}
 	return symbol;
 }
 
@@ -492,13 +510,13 @@ p.getDirPath = function(path,errCode, createDir) {
 	if (!rel) rel =*/ this.projectPath;
 	if (!rel) rel = this.outputPath;
 	var dirPath = resolveRelativePath(rel,path);
-	if (dirPath == null) { Log.error(errCode); return; }
+	if (dirPath == null) { Log.error(errCode); return null; }
 	
 	if (dirPath.charAt(dirPath.length-1) != "/") { dirPath += "/"; }
 	if (!createDir) { return dirPath; }
 	
 	FLfile.createFolder(dirPath);
-	if (!FLfile.exists(dirPath)) { Log.error(errCode); return; }
+	if (!FLfile.exists(dirPath)) { Log.error(errCode); return null; }
 	
 	return dirPath;
 }
@@ -529,7 +547,7 @@ p.writeHTML = function() {
 		+'\n\n<body style="background-color:#D4D4D4">'
 		+'\n\t<canvas id="'+CANVAS_ID+'" width="'+this.doc.width+'" height="'+this.doc.height+'" style="background-color:'+this.doc.backgroundColor+'"></canvas>'
 		+'\n\n\t<script type="application/dart" src="index.dart"></script>'
-    	+'\n\t<script src="packages/browser/dart.js"></script>'
+		+'\n\t<script src="packages/browser/dart.js"></script>'
 		+"\n</body>\n</html>";
 	
 	FLfile.write(this.htmlFilePath, str);
@@ -540,13 +558,7 @@ p.writeHTML = function() {
 p.writeDartLib = function() {
 	Log.time("write library " + this.dartLibFilePath);
 
-	var str =
-		'library '+this.rootSymbol.name+'Lib;\n'
-		+'\n/* WARNING: code generated using the Dart Toolkit for Adobe Flash Professional - do not edit */\n\n'
-		+'import \'dart:html\' as html;\n'
-		+'import \'dart:async\';\n'
-		+'import \'dart:math\';\n'
-		+'import \'package:stagexl/stagexl.dart\';\n\n';
+	var str = "";
 
 	// set up the manifest for sounds and images:
 	if (this.bitmaps.length || this.sounds.length)
@@ -583,10 +595,10 @@ p.writeDartLib = function() {
 			 '/* ASSETS PRELOADING */\n'
 			//+'\n'+defIDs
 			+'\nResourceManager resources;\n\n'
-			+'Future loadResources([String basePath = ""]) {\n'
+			+'ResourceManager initResources([String basePath = ""]) {\n'
 			+'  resources = new ResourceManager()\n'
 			+resList+';\n'
-			+'  return resources.load();\n'
+			+'  return resources;\n'
 			+'}\n\n';
 	}
 
@@ -603,7 +615,14 @@ p.writeDartLib = function() {
 		Log.time();
 	}
 
-	// include API filler
+	// add header
+	str =
+		'library '+this.rootSymbol.name+'Lib;\n'
+		+'\n/* WARNING: code generated using the Dart Toolkit for Adobe Flash Professional - do not edit */\n\n'
+		+this.dartImports.join('\n')+'\n\n'
+		+str;
+
+	// append API filler
 	str += '\n\n' + FLfile.read(BASE_PATH+"libs/shapefactory.dart");
 	if (this.sounds.length)
 		str += '\n\n' + FLfile.read(BASE_PATH+"libs/soundfactory.dart");
@@ -636,8 +655,19 @@ p.writeDartMain = function() {
 		+'  \n';
 
 	if (this.bitmaps.length || this.sounds.length) 
-		str += '    $LIB.loadResources("./").then(_start)\n'
-			+'      .catchError((e) => print(e));\n'
+		str += 
+			 '    $LIB.initResources("./")\n'
+			+'      ..load().then(_start).catchError(_loadError)\n'
+			+'      ..onProgress.listen(_loadProgress);\n'
+			+'  }\n'
+			+'\n'
+			+'  void _loadError(e) {\n'
+			+'    print("One or more resource failed to load.");\n'
+			+'  }\n'
+			+'\n'
+			+'  void _loadProgress(e) {\n'
+			+'    // total: lib.resources.resources.length\n'
+			+'    // loaded: lib.resources.finishedResources.length\n'
 			+'  }\n'
 			+'\n'
 			+'  void _start(result) {\n';
@@ -669,7 +699,7 @@ p.writeDartIndex = function() {
 	str = 'import \'../lib/$DOCNAME.dart\';\n'
 		+ '\n'
 		+ 'void main() {\n'
-	  	+ '  new '+this.docSymbolName+'();\n'
+		+ '  new '+this.docSymbolName+'();\n'
 		+ '}\n';
 
 	str = str.replace("$DOCNAME", this.docName, "g");
@@ -695,3 +725,18 @@ p.readErrors = function() {
 		}
 	}
 }
+
+p.addImport = function(decl) {
+	if (!decl || !decl.length) return;
+
+	var len = (decl.indexOf(';')+1) || decl.length;
+	var comp = decl.substr(0, len);
+
+	for(var i=0; i<this.dartImports.length; i++) {
+		var prev = this.dartImports[i];
+		if (prev.length >= len && prev.substr(0, len) == comp) 
+			return; // duplicated
+	}
+	this.dartImports.push(decl);
+}
+
