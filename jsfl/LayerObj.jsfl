@@ -35,6 +35,7 @@ var p = LayerObj.prototype;
 LayerObj.INDEPENDENT = "independent";
 LayerObj.SINGLE_FRAME = "single";
 LayerObj.SYNCHED = "synched";
+LayerObj.RE_IMPORT = /\bimport /;
 
 // this is also used by mask and guide layers:
 LayerObj.readCodeAndLabels = function(xml, code, labels) {
@@ -50,6 +51,7 @@ LayerObj.readCodeAndLabels = function(xml, code, labels) {
 		var as3 = frame.Actionscript;
 		for (var j=0, jl=as3.length(); j<jl; j++) {
 			var js = as3[j].text();
+			if (LayerObj.RE_IMPORT.exec(js)) { js = LayerObj.extractImports(js); }
 			if (code[index] == null) { code[index] = []; }
 			code[index].push(js);
 		}
@@ -64,6 +66,21 @@ LayerObj.readCodeAndLabels = function(xml, code, labels) {
 			code[index].push('_playSound("'+Exporter.instance.getSymbol(frame.@soundName).name+(repeatCount?'",'+repeatCount:'"')+');');
 		}
 	}
+}
+
+LayerObj.extractImports = function(js) {
+	var lines = js.split('\n');
+	var found = [];
+	for(var i=lines.length-1; i>=0; i--) {
+		if (LayerObj.RE_IMPORT.exec(lines[i])) {
+			found.push(lines[i]);
+			lines.splice(i, 1);
+		}
+	}
+	for(var i=found.length-1;i>=0;i--) {
+		Exporter.instance.addImport(found[i]);
+	}
+	return lines.join('\n');
 }
 
 p.xml;
@@ -554,7 +571,7 @@ p.getStateObj = function(e, frame, names, definitions) {
 	
 	var type = getElementType(e);
 	if (!type) { return null; }
-	var inst, o, stateObj, arr;
+	var inst, instName, o, stateObj, arr;
 	
 	// find the state obj if available. If not, create a new inst.
 	if (type == "shape") {
@@ -573,10 +590,18 @@ p.getStateObj = function(e, frame, names, definitions) {
 		
 		arr = this.stateObjs[hash];
 		if (!arr) { arr = this.stateObjs[hash] = []; }
-		for (var i=0, l=arr.length; i<l; i++) {
-			var o = arr[i];
-			if (o.addFrame(e, frame)) { return o; }
-		}
+
+		var instName = getVarName(e.@name, this.nameSpace, type, true);
+		if (instName.length) // match by exact name
+			for (var i=0, l=arr.length; i<l; i++) {
+				var o = arr[i];
+				if (o.inst.name == instName && o.addFrame(e, frame)) { return o; }
+			}
+		else // 
+			for (var i=0, l=arr.length; i<l; i++) {
+				var o = arr[i];
+				if (o.addFrame(e, frame)) { return o; }
+			}
 		// create new inst:
 		if (type == "instance") {
 			var symbol = Exporter.instance.getSymbol(e.@libraryItemName);
