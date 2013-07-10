@@ -51,3 +51,11 @@ You will need Adobe Extension Manager CS6 (not CC) to create an installable ZXP 
 * Select File > Package ZXP Extension
 * Browse for **darttoolkit-extension/Toolkit_for_Dart.mxi**
 * Choose a location to generate the ZXP file.
+
+
+## Extension dependency
+
+Need install **CreateJS ToolKit** extension before running.
+
+ * <http://www.adobe.com/products/flash/flash-to-html5.html>
+
