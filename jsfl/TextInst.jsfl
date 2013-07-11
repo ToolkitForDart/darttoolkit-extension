@@ -38,12 +38,19 @@ p.toString = function(t,scope) {
 	
 	if (e.name() != "DOMDynamicText") { Log.warning("EJS_W_TEXTFIELD"); }
 	
-	var str = name+" = new TextField(\""+this.getText(e)+"\"";
-	
+	var text = this.getText(e);
+	var str = name+" = new TextField(\""+text+"\"";
+
 	var attrs = e.DOMTextRun[0].DOMTextAttrs[0];
 	var offset = {x:0,y:0}
-	var width = fix(e.@width*1,0);
 	var size = fix(attrs.@size*1||12,0);
+	var padLeft = fix(e.@left*1,0);
+	var padTop = fix(e.@top*1,0);
+	var width = fix(e.@width*1,0) + padLeft*2;
+	var height = fix(e.@height*1,0) + padTop*2;
+	var multiline = false;
+	var wordWrap = false;
+	var autoSize = e.@autoExpand == "true";
 	if (attrs)
 	{
 		str += ", \n"+t+"  new TextFormat("+this.getStyle(attrs);
@@ -51,21 +58,36 @@ p.toString = function(t,scope) {
 		var textAlign = attrs.@alignment;
 		if (textAlign[0] && textAlign != "justify" && textAlign != "left") 
 			str += ", align:\""+textAlign+"\"";		
-		if (e.name() == "DOMStaticText" || e.@lineType != "single") {
-			// potentially multiline.
+
+		var textType = e.name();
+		var lineType = e.@lineType;
+		if (textType == "DOMStaticText" || lineType != "single") {
+
 			str += this.getLeading(attrs);
+
+			if (textType == "DOMStaticText") {
+				multiline = (!autoSize || text.split("\\n").length > 1);
+				if (!autoSize && multiline) wordWrap = true;
+			}
+			else {
+				multiline = true;
+				wordWrap = lineType != "multiline no wrap";
+			}
 		}
-		str += ", topMargin:" + fix(size / 8);
+		var leftMargin = fix(attrs.@leftMargin*1 + padLeft);
+		//str += ", topMargin:" + padTop;
+		str += ", leftMargin:" + leftMargin;
 		str += ')';
-		//if (textAlign == "center") { offset.x = width/2; }
-		//else if (textAlign == "right") { offset.x = width; }
 	}
 	str += ')';
 	str += exportTransform(e, name, "\n"+t, offset, true);
 	str += exportFilters(e.filters.*, name, "\n"+t);
 	
-	//if (e.@autoExpand != "true")
-	str += "\n"+t+"..width = "+(width+size/4);
+	str += "\n"+t+"..width = "+(width);
+	str += "\n"+t+"..height = "+(height);
+	if (multiline) str += "\n"+t+"..multiline = true";
+	if (wordWrap) str += "\n"+t+"..wordWrap = true";
+	if (autoSize) str += "\n"+t+"..autoSize = 'left'";
 	str += ';'
 	
 	return str;
