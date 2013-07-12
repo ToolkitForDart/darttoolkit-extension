@@ -37,7 +37,7 @@ p.optimize = function(doc, bitmaps, imagePath, maxPngSize, maxAtlasSize) {
 	if (optimize.length < 3) return false;
 
 	// export spritesheet
-	var metas = this.export(optimize, imagePath + this.name, maxAtlasSize);
+	var metas = this.exportSp(optimize, imagePath + this.name, maxAtlasSize);
 	if (!metas.length) return false;
 
 	// control that each bitmap has a corresponding frame in the spritesheet
@@ -70,7 +70,7 @@ p.verifyFrames = function(optimize, metas) {
 	return cpt;
 }
 
-p.export = function(optimize, out, maxSize) {
+p.exportSp = function(optimize, out, maxSize) {
 	var exp = this.createExporter();
 	var index = 0;
 	var metas = [];
