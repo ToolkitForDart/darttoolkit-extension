@@ -34,7 +34,7 @@ p.optimize = function(doc, bitmaps, imagePath, maxPngSize, maxAtlasSize) {
 
 	// match with exported images
 	var optimize = this.filterMedias(symbols, bitmaps, maxPngSize);
-	if (optimize.length < 2) return false;
+	if (optimize.length < 3) return false;
 
 	// export spritesheet
 	var metas = this.exportSp(optimize, imagePath + this.name, maxAtlasSize);

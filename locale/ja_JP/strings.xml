@@ -87,7 +87,7 @@
 	<s key="EJS_W_SHADOW">Shadow and glow filters are very expensive effects, and not all options are supported.</s>
 	<s key="EJS_W_TEXTFIELD">Input and static text fields are published as dynamic text fields.</s>
 	<s key="EJS_W_TEXT">Text support is limited. It is generally recommended to include text as HTML elements.</s>
-	<s key="EJS_W_BMPFILL">Bitmap fills will not be transformed in the output, and may render differently.</s>
+	<s key="EJS_W_BMPFILL">Bitmap fills may render incorrectly.</s>
 	<s key="EJS_W_RADGRAD">Only circular (not oval) radial gradients are supported.</s>
 	<s key="EJS_W_FRAMENUMS">Frame numbers in Dart StageXL start at 0 instead of 1. For example, this affects gotoAndStop and gotoAndPlay calls.</s>
 	<s key="EJS_W_ANIMCACHE">Applying "cache as bitmap" to an animated instance could have unexpected results.</s>
@@ -96,6 +96,8 @@
 	<s key="EJS_E_EMPTYSYMBOL">Empty symbol. [%DETAILS%]</s> <!-- this is now a warning, despite it's coding -->
 	<s key="EJS_W_BITMAPBTN">Content with both Bitmaps and Buttons may generate local security errors in some browsers if run from the local file system.</s>
 	<s key="EJS_W_ORIENTTOPATH">Orient to path support is limited.</s>
+	<s key="EJS_W_EXCLUDEDBMP">%DETAILS% image(s) omitted from export</s>
+	<s key="EJS_W_PACKEDBMPS">%DETAILS% PNG(s) packed successfully into %DETAILS% spritesheet(s).</s>
 	
 	
 	<!-- TIMELINE MESSAGES -->
