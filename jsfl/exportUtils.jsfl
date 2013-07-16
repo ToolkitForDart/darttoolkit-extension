@@ -38,7 +38,7 @@ var IDENTIFIER_REGEXP = new RegExp("[^"+UNICODE_IDENTIFIER_ALL+"]","g");
 var LIB_REGEXP = new RegExp("^("+LIB_RESERVED_WORDS+")$","g");
 
 var varNames = {lib:{},images:{}}
-getVarName = function(name, scope, fallback) {
+getVarName = function(name, scope, fallback, isTest) {
 
 	var o = varNames;
 	if (scope) {
@@ -59,6 +59,7 @@ getVarName = function(name, scope, fallback) {
 
 	if (name.charAt(0).match(/\d/) != null || name.match(JS_RESERVED_REGEXP)) { name = "_"+name; }
 	if (name.length < 1) { name = fallback || "untitled"; }
+	if (isTest) return name;
 	if (o[name]) {
 		var i = 0;
 		while (o[name+"_"+(++i)]) {}
