@@ -53,9 +53,10 @@ You will need Adobe Extension Manager CS6 (not CC) to create an installable ZXP 
 * Choose a location to generate the ZXP file.
 
 
-## Extension dependency
+## Compatibility
 
-Need install **CreateJS ToolKit** extension before running.
+The extension is developped for Flash CC but should be generally compatible with Flash CS6 
+if you have installed **Toolkit for CreateJS**.
 
  * <http://www.adobe.com/products/flash/flash-to-html5.html>
 
