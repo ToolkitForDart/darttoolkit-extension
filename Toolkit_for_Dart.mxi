@@ -1,6 +1,6 @@
 ﻿<macromedia-extension
 	 name="Toolkit for Dart for Adobe Flash Professional"
-	 version="0.5.0"
+	 version="0.5.0.1"
 	 id="Toolkit_for_Dart_for_Adobe_Flash_Professional"
 	 type="flashpanel"
 	 force-quit="true"
@@ -14,7 +14,7 @@
 	<author name="Adobe Systems" />
 
 	<products>
-		<product name="Flash" version="13" primary="true" required="true" />
+		<product name="Flash" version="12" primary="true" required="true" />
 	</products>
 
 	<update  />
