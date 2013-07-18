@@ -26,7 +26,7 @@ Open a Terminal and paste:
 
     cd ~/Library/Application Support/Adobe/Flash CC/en_US/Configuration
     git clone https://github.com/ToolkitForDart/darttoolkit-extension.git DartJS
-    copy DartJS/ui/Toolkit\ for\ Dart.swf  WindowSWF/
+    cp DartJS/ui/Toolkit\ for\ Dart.swf  WindowSWF/
 
 ### Windows
 
