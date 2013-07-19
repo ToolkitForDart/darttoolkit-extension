@@ -51,6 +51,7 @@ p.toString = function(t,scope) {
 	var multiline = false;
 	var wordWrap = false;
 	var autoSize = e.@autoExpand == "true";
+	var isStatic = true;
 	if (attrs)
 	{
 		str += ", \n"+t+"  new TextFormat("+this.getStyle(attrs);
@@ -70,6 +71,7 @@ p.toString = function(t,scope) {
 				if (!autoSize && multiline) wordWrap = true;
 			}
 			else {
+				isStatic = false;
 				multiline = true;
 				wordWrap = lineType != "multiline no wrap";
 			}
@@ -80,6 +82,7 @@ p.toString = function(t,scope) {
 		str += ')';
 	}
 	str += ')';
+	if (!isStatic) str += "\n"+t+"..name = \""+name+"\"";
 	str += exportTransform(e, name, "\n"+t, offset, true);
 	str += exportFilters(e.filters.*, name, "\n"+t);
 	

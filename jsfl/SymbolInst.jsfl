@@ -49,6 +49,7 @@ p.toString = function(t,scope) {
 	
 	var name = (scope?scope+".":"")+this.name;
 	var str = name+" = new "+this.symbol.name+"("+params.join(",")+")";
+	if (name != "instance" && name.substr(0, 9) != "instance_") str += "\n"+t+"..name = \""+name+"\"";
 	str += exportTransform(e, name, "\n"+t);
 	str += exportFilters(e.filters.*, name, "\n"+t);
 	
