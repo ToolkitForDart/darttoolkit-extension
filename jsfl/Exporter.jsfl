@@ -114,8 +114,6 @@ Exporter = function(doc, props) {
 	this.atlas_maxSize = props.maxAtlas || 2048;
 	this.dartImports = [
 		'import \'dart:html\' as html;',
-		'import \'dart:async\';',
-		'import \'dart:math\';',
 		'import \'package:stagexl/stagexl.dart\';'
 	];
 	

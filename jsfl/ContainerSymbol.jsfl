@@ -92,14 +92,7 @@ p.toString = function(t) {
 		if (functions.length) {
 			contentStr = t+"\t// timeline functions:\n"+functions.join("\n")+"\n\n"+contentStr;
 		}
-	}/* else if (l && (code = this.code[0])) {
-		// single frame container, execute code at end of init.
-		var fname = getVarName("frame_0", "__CREATEJS_SYMB__"+this.name);
-		contentStr += t+"\t// timeline function:\n";
-		contentStr += t+"\tthis."+fname+" = function() {\n"+t+"\t\t"+code.join("\n").split("\n").join("\n\t"+t+"\t")+"\n\t"+t+"}\n\n";
-		actionsStr = t+"\tthis."+fname+"();\n";
-		
-	}*/
+	}
 	Log.time();
 	
 	Log.time("write layers");

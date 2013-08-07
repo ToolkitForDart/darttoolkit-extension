@@ -28,14 +28,17 @@ StateObj = function(inst, frame, type){
 	this.frames = [];
 	this.frames[frame] = this.baseProps;
 	this.prevFrame = frame;
+	this.score = 0;
 }
 var p = StateObj.prototype;
 
-p.inst;
-p.changedProps;
-p.baseProps;
-p.frames;
-p.type;
+p.inst; // the instance object (ex. SymbolInst, TextInst, ShapeInst)
+p.changedProps; // hash of props that have changed
+p.baseProps; // starting props
+p.frames; // props list
+p.type; // element type (via getElementType)
+p.score = 0; // own tween score
+p.tween = false; // boolean
 
 p.addFrame = function(e, frame) {
 	if (this.prevFrame == frame) { return false; }
@@ -49,6 +52,7 @@ p.addFrame = function(e, frame) {
 p.getFrameStr = function(frame, scope) {
 	var props = this.frames[frame];
 	if (!props) { return null; }
+	if (this.tween) { return "{\"t\":"+scope+this.inst.name+"}"; }
 	var str = '{"t":'+scope+this.inst.name;
 	var arr = [];
 	for (var n in this.changedProps) {
