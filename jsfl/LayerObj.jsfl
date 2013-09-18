@@ -76,7 +76,6 @@ LayerObj.readCodeAndLabels = function(xml, code, labels) {
 	// label:
 		if (frameXML.@labelType == "name") {
 			var lbl = frameXML.@name;
-			if (lbl != getVarName(lbl)) { lbl = "\""+lbl+"\""; }
 			labels.push("\""+lbl+"\":"+index);
 		}
 		
