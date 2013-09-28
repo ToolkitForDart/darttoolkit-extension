@@ -113,7 +113,6 @@ Exporter = function(doc, props) {
 	this.atlas_maxPng = props.maxPng || 1024;
 	this.atlas_maxSize = props.maxAtlas || 2048;
 	this.dartImports = [
-		'import \'dart:html\' as html;',
 		'import \'package:stagexl/stagexl.dart\';'
 	];
 	
