@@ -645,7 +645,7 @@ p.writeDartMain = function() {
 		+'  $LIB.$DOCSYMBOL exportRoot;\n'
 		+'\n'
 		+'  $DOCSYMBOL() {\n'
-		+'    stage = new Stage("$STAGE", html.document.querySelector("#$STAGE"), '+this.doc.width+', '+this.doc.height+', '+this.fps+');\n'
+		+'    stage = new Stage(html.document.querySelector("#$STAGE"), width: '+this.doc.width+', height: '+this.doc.height+', frameRate: '+this.fps+', webGL: false);\n'
 		+'\n'
 		+'    renderLoop = new RenderLoop();\n'
 		+'    renderLoop.addStage(stage);\n'
