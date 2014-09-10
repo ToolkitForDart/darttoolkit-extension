@@ -693,7 +693,7 @@ p.writeDartMain = function() {
 p.writeDartIndex = function() {
 	Log.time("write index " + this.dartFilePath);
 
-	str = 'import \'../lib/$DOCNAME.dart\';\n'
+	str = 'import \'package:$DOCNAME/$DOCNAME.dart\';\n'
 		+ '\n'
 		+ 'void main() {\n'
 		+ '  new '+this.docSymbolName+'();\n'
