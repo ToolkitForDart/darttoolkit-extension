@@ -568,7 +568,7 @@ p.writeDartLib = function() {
 			for(i=0; i<this.spritesheets.sheets.length; i++) {
 				var sheet = this.spritesheets.sheets[i];
 				if (resList.length) resList += '\n';
-				resList += '  ..addTextureAtlas("' + sheet +'", "${basePath}'+this.imagesPath+sheet+'.json", "json")';
+				resList += '  ..addTextureAtlas("' + sheet +'", "${basePath}'+this.imagesPath+sheet+'.json", TextureAtlasFormat.JSON)';
 			}
 		}
 
