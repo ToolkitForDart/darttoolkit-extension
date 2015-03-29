@@ -24,7 +24,7 @@
 /************************************************************************
 VERSIONS
 ************************************************************************/
-var VERSION = "0.5.1";
+var VERSION = "0.5.2";
 var DEBUG = false;
 
 /************************************************************************
@@ -80,7 +80,6 @@ var MAC = (fl.version.indexOf("MAC") != -1);
 var BASE_PATH = fl.configURI+"DartJS/";
 var JSFL_PATH = BASE_PATH+"jsfl/";
 var JS_LIB_PATH = BASE_PATH+"libs/";
-//var HOSTED_LIB_PATH = "http://code.createjs.com/";
 var LOCALE_PATH = BASE_PATH+"locale/%LANG%/strings.xml";
 var CHANGE_LOG_PATH = BASE_PATH+"changeLog.dat";
 var DEFAULT_SETTINGS_PATH = BASE_PATH+"defaultSettings.dat";
