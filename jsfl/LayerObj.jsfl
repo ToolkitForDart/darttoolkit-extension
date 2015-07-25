@@ -213,7 +213,7 @@ p.prescan = function(scope, names) {
 	for (var i=0,l=frames.length(); i<l; i++) {
 		prevKeyframe = keyframe;
 		var frameXML = frames[i];
-		var nextFrameXML = frames[i+1];
+		if (frameXML == null) continue;
 		var index = frameXML.@index*1;
 		var duration = frameXML.@duration*1||1;
 
@@ -257,7 +257,8 @@ p.prescan = function(scope, names) {
 		if (keyframe.isTween) {
 			if (frameXML.@motionTweenScale == "false") { Log.warning("EJS_W_F_TWEENNOSCALE"); }
 			if (frameXML.@hasCustomEase == "true") { Log.warning("EJS_W_F_CUSTOMEASE"); }
-			if (nextFrameXML.elements.*.length() > 1) { Log.warning("EJS_W_TWEENENDMULTI"); }
+			var nextFrameXML = frames[i+1];
+			if (nextFrameXML && nextFrameXML.elements.*.length() > 1) { Log.warning("EJS_W_TWEENENDMULTI"); }
 		}
 
 	// check if it's solo, and increase score if it is:
@@ -277,7 +278,7 @@ p.prescan = function(scope, names) {
 	}
 
 	// add an empty keyframe if this layer doesn't extend through the full timeline:
-	var tl = frameXML.@index*1+(frameXML.@duration*1||1);
+	var tl = frameXML ? frameXML.@index*1+(frameXML.@duration*1||1) : 0;
 	if (tl<this.duration) {
 		kfs.push({index:tl, elements:(<empty/>).none, frameXML:null, stateObjList:[]});
 	}
