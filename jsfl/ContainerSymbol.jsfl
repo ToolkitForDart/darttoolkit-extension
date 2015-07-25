@@ -81,7 +81,7 @@ p.toString = function(t) {
 		var prev = 0;
 		for (i=0; i<l; i++) {
 			if (!(code = this.code[i])) { continue; }
-			var fname = getVarName("frame_"+i, "__DART_SYMB__"+this.name); // just in case there is an instance named frame_X.
+			var fname = getVarName("frame_"+i, "__SYMB__"+this.name); // just in case there is an instance named frame_X.
 			functions.push(t+"\tvoid "+fname+"() {\n"+t+"\t\t"+code.join("\n").split("\n").join("\n\t"+t+"\t")+"\n\t"+t+"}");
 			if (i-prev) { contentStr += ".wait("+fix((i-prev)*m,0)+")"; }
 			contentStr += ".call("+fname+")";
@@ -157,11 +157,11 @@ p.read = function() {
 		var o;
 
 		if (layer.@layerType == "guide") {
-			o = new GuideLayerObj(layer, "__CREATEJS_SYMB__"+namespace, this.duration);
+			o = new GuideLayerObj(layer, "__SYMB__"+namespace, this.duration);
 		} else if (layer.@layerType == "mask") {
-			o = new MaskLayerObj(layer, "__CREATEJS_SYMB__"+namespace, this.duration);
+			o = new MaskLayerObj(layer, "__SYMB__"+namespace, this.duration);
 		} else {
-			o = new LayerObj(layer, "__CREATEJS_SYMB__"+namespace, this.duration);
+			o = new LayerObj(layer, "__SYMB__"+namespace, this.duration);
 		}
 
 		if (layer.@parentLayerIndex[0]) {

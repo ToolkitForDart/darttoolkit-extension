@@ -98,6 +98,7 @@
 	<s key="EJS_W_ORIENTTOPATH">Orient to path support is limited.</s>
 	<s key="EJS_W_EXCLUDEDBMP">%DETAILS% image(s) omitted from export</s>
 	<s key="EJS_W_PACKEDBMPS">%DETAILS% PNG(s) packed successfully into %DETAILS% spritesheet(s).</s>
+	<s key="EJS_W_NAMECOLLISION">Renamed identifier to avoid name collision [%DETAILS%]</s>
 	
 	
 	<!-- TIMELINE MESSAGES -->

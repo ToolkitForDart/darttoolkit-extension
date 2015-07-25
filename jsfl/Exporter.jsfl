@@ -117,7 +117,7 @@ Exporter = function(doc, props) {
 	];
 	
 	this.docName = extractFileName(doc.name, false);
-	this.docSymbolName = getVarName(doc.docClass||this.docName, "__DART_LIB", "Symbol");
+	this.docSymbolName = getVarName(this.docName, "__LIB__", "Symbol");
 	this.bitmaps = [];
 	this.sounds = [];
 	this.symbols = [];
@@ -407,7 +407,7 @@ p.readBitmaps = function() {
 	for (var i=0,l=bitmaps.length(); i<l; i++) {
 		var xml = bitmaps[i];
 		var symbol = new BitmapSymbol(xml);
-		var sname = ""+xml.@name;
+		var sname = "" + xml.@name;
 		var name = sname.split("/").pop();
 		if (name.charAt(0) == '!') { // excluded
 			excludedBitmaps++;
@@ -425,7 +425,8 @@ p.readSounds = function() {
 	for (var i=0,l=sounds.length(); i<l; i++) {
 		var xml = sounds[i];
 		var symbol = new SoundSymbol(xml);
-		this.addSymbol(xml.@name, xml.@linkageClassName, "Sound", symbol);
+		var sname = "" + xml.@name;
+		this.addSymbol(sname, xml.@linkageClassName, "Sound", symbol);
 		this.sounds.push(symbol);
 	}
 }
@@ -472,7 +473,8 @@ p.exportMovieClip = function(xml) {
 p.addSymbol = function(id, linkage, defaultName, symbol) {
 	if (this.symbolMap[id]) { Log.error("EJS_E_JSXEXPORT","DUPSYMB ("+id+")"); return null; }
 	var name = String(linkage) || extractFileName(id, false, true);
-	symbol.name = getVarName(name, "__DART_LIB", defaultName);
+	//if (defaultName == "Bitmap" || defaultName == "Sound") name += defaultName;
+	symbol.name = getVarName(name, "__LIB__", defaultName);
 	
 	this.symbols.push(symbol);
 	this.symbolMap[id] = symbol;

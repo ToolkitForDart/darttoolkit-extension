@@ -52,7 +52,7 @@ getVarName = function(name, scope, fallback, isTest) {
 	name = !name ? "" : String(name);
 	name = name.replace(IDENTIFIER_REGEXP,"");
 
-	if (scope == "__DART_LIB") {
+	if (scope == "__LIB__") {
 		name = name.charAt(0).toUpperCase() + name.substr(1);
 		if (name.match(LIB_REGEXP)) name = name + "Symbol";
 	}
@@ -64,6 +64,10 @@ getVarName = function(name, scope, fallback, isTest) {
 		var i = 0;
 		while (o[name+"_"+(++i)]) {}
 		name = name+"_"+i;
+		
+		// inform about name collisions
+		var parts = scope.split("__");
+		Log.warning("EJS_W_NAMECOLLISION", parts.pop() + "::" + name);
 	}
 	o[name] = true;
 	return name;
