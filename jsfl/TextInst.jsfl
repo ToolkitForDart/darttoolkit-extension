@@ -52,16 +52,19 @@ p.toString = function(t,scope) {
 	var wordWrap = false;
 	var autoSize = e.@autoExpand == "true";
 	var isStatic = true;
+	var textAlign = "left";
 	if (attrs)
 	{
 		str += ", \n"+t+"  new TextFormat("+this.getStyle(attrs);
 		
-		var textAlign = attrs.@alignment;
-		if (textAlign[0] && textAlign != "justify" && textAlign != "left") 
+		textAlign = ""+attrs.@alignment;
+		if (textAlign == "" || textAlign == "justify") textAlign = "left";
+		if (textAlign != "left") 
 			str += ", align:\""+textAlign+"\"";		
 
-		var textType = e.name();
-		var lineType = e.@lineType;
+		var textType = ""+e.name();
+		var lineType = ""+e.@lineType;
+		if (lineType == "") lineType = "single";
 		if (textType == "DOMStaticText" || lineType != "single") {
 
 			str += this.getLeading(attrs);
@@ -90,7 +93,7 @@ p.toString = function(t,scope) {
 	str += "\n"+t+"..height = "+(height);
 	if (multiline) str += "\n"+t+"..multiline = true";
 	if (wordWrap) str += "\n"+t+"..wordWrap = true";
-	if (autoSize) str += "\n"+t+"..autoSize = 'left'";
+	if (autoSize) str += "\n"+t+"..autoSize = '" + textAlign + "'";
 	str += ';'
 	
 	return str;
