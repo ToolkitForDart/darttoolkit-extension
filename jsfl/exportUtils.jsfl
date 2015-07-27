@@ -41,6 +41,7 @@ var varNames = {lib:{},images:{}}
 getVarName = function(name, scope, fallback, isTest) {
 
 	var o = varNames;
+	var isFallback = false;
 	if (scope) {
 		if (o[scope] == null) { o[scope] = {}; }
 		else if (typeof(o[scope]) != "object") {
@@ -58,16 +59,23 @@ getVarName = function(name, scope, fallback, isTest) {
 	}
 
 	if (name.charAt(0).match(/\d/) != null || name.match(JS_RESERVED_REGEXP)) { name = "_"+name; }
-	if (name.length < 1) { name = fallback || "untitled"; }
+	if (name.length < 1) { 
+		name = fallback || "untitled"; 
+		isFallback = true;
+	}
 	if (isTest) return name;
 	if (o[name]) {
 		var i = 0;
 		while (o[name+"_"+(++i)]) {}
 		name = name+"_"+i;
 		
-		// inform about name collisions
-		var parts = scope.split("__");
-		Log.warning("EJS_W_NAMECOLLISION", parts.pop() + "::" + name);
+		if (!isFallback) {
+			// inform about name collisions
+			var parts = scope.split("__");
+			var scopeName = parts.pop();
+			if (scopeName.length > 0) name = scopeName + "." + name;
+			Log.warning("EJS_W_NAMECOLLISION", name);
+		}
 	}
 	o[name] = true;
 	return name;
