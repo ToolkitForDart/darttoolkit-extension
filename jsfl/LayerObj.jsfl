@@ -80,9 +80,11 @@ LayerObj.readCodeAndLabels = function(xml, code, labels) {
 		}
 		
 	// handle code:
-		var as3 = frameXML.Actionscript;
-		for (var j=0, jl=as3.length(); j<jl; j++) {
-			var js = as3[j].text();
+		var scripts = frameXML.Actionscript; // AS3 doc
+		if (scripts.length() == 0) scripts = frameXML.Framescript; // HTML5 doc
+		
+		for (var j=0, jl=scripts.length(); j<jl; j++) {
+			var js = scripts[j].text();
 			if (LayerObj.RE_IMPORT.exec(js)) { js = LayerObj.extractImports(js); }
 			if (code[index] == null) { code[index] = []; }
 			code[index].push(js);
