@@ -73,8 +73,8 @@ getVarName = function(name, scope, fallback, isTest) {
 			// inform about name collisions
 			var parts = scope.split("__");
 			var scopeName = parts.pop();
-			if (scopeName.length > 0) name = scopeName + "." + name;
-			Log.warning("EJS_W_NAMECOLLISION", name);
+			var qualifiedName = scopeName.length > 0 ? scopeName + "." + name : name;
+			Log.warning("EJS_W_NAMECOLLISION", qualifiedName);
 		}
 	}
 	o[name] = true;
