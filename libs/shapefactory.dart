@@ -2,7 +2,7 @@
 /* SHORTCUTS */
 
 const _tween = TimelineTween.get;
-const _ease = TransitionFunction.custom;
+const _ease = Transition.custom;
 const _draw = _ShapeFactory.create;
 
 class _ShapeFactory {
@@ -11,8 +11,8 @@ class _ShapeFactory {
   Function _endFill;
   Function _endStroke;
   num _strokeWidth = 1;
-  String _strokeJoints = "miter";
-  String _strokeCaps = "butt";
+  JointStyle _strokeJoints = JointStyle.MITER;
+  CapsStyle _strokeCaps = CapsStyle.NONE;
   
   static _ShapeFactory create(num x, num y) {
     return new _ShapeFactory(x, y);
@@ -119,7 +119,7 @@ class _ShapeFactory {
     return this;
   }
   _ShapeFactory bf(Bitmap image, [String repeat, Matrix mat]) {
-    var bmp = image.bitmapData;
+    var bmp = image.bitmapData.renderTextureQuad;
     GraphicsPattern pattern = null;
     if (mat != null) mat.translate(-_shape.x, -_shape.y);
     else mat = new Matrix(1, 0, 0, 1, -_shape.x, -_shape.y);
@@ -194,23 +194,23 @@ class _ShapeFactory {
   _ShapeFactory ss(num thickness, [caps, joints, num miterLimit=10, bool ignoreScale=false]) {
     _strokeWidth = thickness;
     if (caps != null) {
-      switch(caps) {
-        case 0: _strokeCaps = "butt"; break;
-        case 1: _strokeCaps = "round"; break;
-        case 2: _strokeCaps = "square"; break;
-        default: _strokeCaps = caps.toString(); break;
-      }
-    }
-    else _strokeCaps = "butt";
-    if (joints != null) {
-      switch(joints) {
-        case 0: _strokeJoints = "miter"; break;
-        case 1: _strokeJoints = "round"; break;
-        case 2: _strokeJoints = "bevel"; break;
-        default: _strokeJoints = joints.toString(); break;
-      }
-    }
-    else _strokeJoints = "miter";
+          switch(caps) {
+            case 0: _strokeCaps = CapsStyle.NONE; break;
+            case 1: _strokeCaps = CapsStyle.ROUND; break;
+            case 2: _strokeCaps = CapsStyle.SQUARE; break;
+            default: _strokeCaps = CapsStyle.NONE; break;
+          }
+        }
+        else _strokeCaps = CapsStyle.NONE;;
+        if (joints != null) {
+          switch(joints) {
+            case 0: _strokeJoints = JointStyle.MITER; break;
+            case 1: _strokeJoints = JointStyle.ROUND; break;
+            case 2: _strokeJoints = JointStyle.BEVEL; break;
+            default: _strokeJoints = JointStyle.MITER; break;
+          }
+        }
+        else _strokeJoints = JointStyle.MITER;
     return this;
   }
   
