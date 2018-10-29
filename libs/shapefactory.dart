@@ -124,10 +124,10 @@ class _ShapeFactory {
     if (mat != null) mat.translate(-_shape.x, -_shape.y);
     else mat = new Matrix(1, 0, 0, 1, -_shape.x, -_shape.y);
     switch (repeat) {
-      case "repeat-x": pattern = new GraphicsPattern.repeatX(bmp.renderTextureQuad, mat); break;
-      case "repeat-y": pattern = new GraphicsPattern.repeatY(bmp.renderTextureQuad, mat); break;
-      case "no-repeat": pattern = new GraphicsPattern.noRepeat(bmp.renderTextureQuad, mat); break;
-      default: pattern = new GraphicsPattern.repeat(bmp.renderTextureQuad, mat); break;
+      case "repeat-x": pattern = new GraphicsPattern.repeatX(bmp, mat); break;
+      case "repeat-y": pattern = new GraphicsPattern.repeatY(bmp, mat); break;
+      case "no-repeat": pattern = new GraphicsPattern.noRepeat(bmp, mat); break;
+      default: pattern = new GraphicsPattern.repeat(bmp, mat); break;
     }
     _endFill = () {
       _graphics.fillPattern(pattern);
