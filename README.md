@@ -6,6 +6,12 @@ Toolkit for Dart for Adobe Flash Professional allows you to publish a FLA to HTM
 * <http://dartlang.org>
 * <http://www.stagexl.org>
 
+#### October 2018 Update
+ 
+ 'Toolkit for Dart' does not work with Adobe Animate CC, the follow-up product to Flash Professional.
+ However, you can still install Flash Professional CC 2014.1 via Adobe's Creative Cloud Manager: [Help article](https://helpx.adobe.com/download-install/using/install-previous-version.html).
+ 
+
 ## Sources organization
 
 * **defaultsettings.dat** - Toolkit version and settings defaults
@@ -59,4 +65,6 @@ The extension is developped for Flash CC but should be generally compatible with
 if you have installed **Toolkit for CreateJS**.
 
  * <http://www.adobe.com/products/flash/flash-to-html5.html>
+ 
+
 
