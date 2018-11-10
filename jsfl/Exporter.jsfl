@@ -531,7 +531,7 @@ p.writePubSpec = function() {
 		+'  sdk: \'>=2.0.0 <3.0.0\'\n'
 		+'dev_dependencies:\n'
 		+'  build_runner: \'>=0.10.0 <2.0.0\'\n'
-		+'  build_test: \'>=0.10.2+5 <2.0.0'\n'
+		+'  build_test: \'>=0.10.2+5 <2.0.0\'\n'
 		+'  build_web_compilers: \'>=0.4.0+4 <2.0.0\'\n'
 		+'dependencies:\n'
 		+'  stagexl: any\n'
